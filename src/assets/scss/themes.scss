@@ -2,14 +2,14 @@
 
 @include material.core();
 
+// THEMES
 $light-theme: material.define-light-theme(
 	(
 		color: (
 			primary: material.define-palette(material.$cyan-palette, 400),
-			accent: material.define-palette(material.$light-green-palette, A400),
-			// warn
+			accent: material.define-palette(material.$teal-palette, A400),
+			warn: material.define-palette(material.$red-palette, 600)
 		),
-		typography: material.define-typography-config(),
 		density: 0
 	)
 );
@@ -19,13 +19,31 @@ $dark-theme: material.define-dark-theme(
 		color: (
 			primary: material.define-palette(material.$deep-purple-palette, A200),
 			accent: material.define-palette(material.$pink-palette, 300),
-			// warn
-		)
+			warn: material.define-palette(material.$red-palette, 400)
+		),
+		density: 0
 	)
 );
 
+// TYPOGRAPHY
+$typography-web: material.define-typography-config(
+	$font-family: 'Open Sans, sans serif'
+);
+
+$typography-mobile: material.define-typography-config(
+	$font-family: 'Roboto, sans serif'
+);
+
+// THEME & TYPOGRAPHY BY DEFAULT
+@include material.core($typography-web);
 @include material.all-component-themes($light-theme);
 
+// Class to dark mode
 .dark-mode {
 	@include material.all-component-colors($dark-theme);
+}
+
+// Class to font family mobile
+.font-mobile {
+	@include material.core($typography-mobile);
 }
