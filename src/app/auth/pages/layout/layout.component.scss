@@ -1,0 +1,18 @@
+@import './../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+#auth-container {
+	width: 65%;
+	min-height: 60%;
+	max-height: 100%;
+
+	@include media($mobile-size) {
+		width: 100%;
+		height: 100%;
+	}
+}

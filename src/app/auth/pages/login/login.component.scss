@@ -1,0 +1,120 @@
+@import './../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+#container-login {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	padding-top: 20px;
+	padding-bottom: 40px;
+	position: relative;
+
+	.mat-h2 {
+		font-size: 25px;
+		font-weight: 600;
+
+		@include media($mobile-size) {
+			font-size: 20px;
+			font-weight: 500;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+	}
+
+	#container-form {
+		width: 90%;
+		display: flex;
+		gap: 25px;
+
+		& > div {
+			&:first-child {
+				min-width: 210px;
+				width: 210px;
+
+				img {
+					width: 100%;
+				}
+			}
+
+			&:last-child {
+				flex-grow: 1;
+			}
+
+			@include media($mobile-size) {
+				&:first-child {
+					min-width: none;
+					width: 0;
+					display: none;
+
+					img {
+						width: 0;
+					}
+				}
+			}
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+
+			.field-login {
+				width: 100%;
+			}
+
+			button[type='submit'] {
+				width: 100%;
+				color: white;
+				font-size: 15px;
+				font-weight: 500;
+			}
+
+			@include media($mobile-size) {
+				gap: 0px;
+
+				button[type='submit'] {
+					margin-top: 15px;
+					text-transform: uppercase;
+				}
+			}
+		}
+
+		#sign-up-link {
+			display: block;
+			width: 100%;
+			font-size: 0.9em;
+			margin-top: 1.5em;
+			text-align: end;
+
+			@include media($mobile-size) {
+				font-family: $font-family-mobile;
+				text-decoration: underline;
+				text-transform: uppercase;
+				letter-spacing: 0.2px;
+				text-align: center;
+			}
+		}
+	}
+
+	@include media($mobile-size) {
+		border: 0;
+		position: relative;
+		overflow: hidden;
+
+		&::before {
+			content: url('./../../../../assets/svg/undraw_complete_task_re_44tb.svg');
+			position: absolute;
+			opacity: 0.3;
+		}
+	}
+}

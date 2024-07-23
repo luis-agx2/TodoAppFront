@@ -1,0 +1,44 @@
+<div id="container-login">
+	<h2 class="mat-h2">Sign In</h2>
+
+	<div id="container-form">
+		<!-- Image -->
+		<div>
+			<img
+				src="./../../../../assets/svg/undraw_undraw_undraw_undraw_undraw_notebook_ask4_ew5s_-1-_954q_-1-_yoow_-1-_n5mm.svg"
+				alt="Login"
+			/>
+		</div>
+		<!-- Image -->
+
+		<!-- Form -->
+		<div>
+			<form [formGroup]="formLogin">
+				<!-- Email field -->
+				<mat-form-field class="field-login" appearance="outline">
+					<mat-label>Email</mat-label>
+					<input type="email" matInput formControlName="email" />
+					<mat-error> Please enter a valid email address </mat-error>
+				</mat-form-field>
+				<!-- Email field -->
+
+				<!-- Password field -->
+				<mat-form-field class="field-login" appearance="outline">
+					<mat-label>Password</mat-label>
+					<input type="password" matInput formControlName="password" />
+					<mat-error> Please enter a valid email address </mat-error>
+				</mat-form-field>
+				<!-- Password field -->
+
+				<!-- Button submit login -->
+				<button type="submit" mat-raised-button color="primary">Sign in</button>
+				<!-- Button submit login -->
+			</form>
+
+			<!-- Signup button -->
+			<a id="sign-up-link">Sign Up</a>
+			<!-- Signup button -->
+		</div>
+		<!-- Form -->
+	</div>
+</div>
