@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Input, ViewContainerRef } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ErrorMessagesService } from '../../utils/services/error-messages-service/error-messages.service';
+import { ErrorMessage } from '../../interfaces/error-message.interface';
+import { ErrorMessagesService } from '../../services/error-messages-service/error-messages.service';
 
 @Directive({
 	selector: '[appReactiveControlError]'
@@ -9,10 +10,16 @@ import { ErrorMessagesService } from '../../utils/services/error-messages-servic
 export class ReactiveControlErrorDirective {
 	private control?: AbstractControl;
 	private name?: string;
+	private messages?: ErrorMessage;
 	private valueChangesSubscription?: Subscription;
+	a: any;
 
 	@Input() set fieldName(name: string) {
 		this.name = name;
+	}
+
+	@Input() set customErrorMessages(errorMessages: ErrorMessage | null) {
+		this.messages = errorMessages ?? undefined;
 	}
 
 	@Input() set appReactiveControlError(control: AbstractControl | null) {
@@ -42,6 +49,6 @@ export class ReactiveControlErrorDirective {
 	}
 
 	getErrorMessage(): string {
-		return this.errorMessagesSvc.getErrorMessage(this.control!, this.name!);
+		return this.errorMessagesSvc.getErrorMessage(this.control, this.name, this.messages);
 	}
 }
