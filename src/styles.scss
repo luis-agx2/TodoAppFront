@@ -2,6 +2,12 @@
 @import './assets/scss/themes.scss';
 @import './assets/scss/variables.scss';
 
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
 html,
 body {
 	height: 100%;
@@ -30,5 +36,15 @@ a {
 		text-decoration: underline !important;
 		cursor: pointer;
 		opacity: 0.9;
+	}
+}
+
+// Styles for MAtSnackBar
+.mat-snack-bar-error {
+	background-color: $error-background-color;
+	font-weight: 600;
+
+	@include media($mobile-size) {
+		font-weight: 500;
 	}
 }

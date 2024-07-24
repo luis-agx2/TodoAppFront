@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-	production: false
+	production: false,
+	baseUrl: 'localhost:8080/TodoAppRest/api',
+	auth: {
+		baseUrl: 'localhost:8080/TodoAppRest/api/auth',
+		login: '',
+		register: 'register'
+	}
 };
 
 /*

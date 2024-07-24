@@ -98,7 +98,7 @@
 
 			@include media($mobile-size) {
 				font-family: $font-family-mobile;
-				text-decoration: underline;
+				font-size: 14px;
 				text-transform: uppercase;
 				letter-spacing: 0.2px;
 				text-align: center;
@@ -115,6 +115,7 @@
 			content: url('./../../../../assets/svg/undraw_complete_task_re_44tb.svg');
 			position: absolute;
 			opacity: 0.3;
+			pointer-events: none;
 		}
 	}
 }
