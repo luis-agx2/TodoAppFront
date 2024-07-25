@@ -39,7 +39,14 @@ a {
 	}
 }
 
-// Styles for MAtSnackBar
+// Styles for MatError
+.mat-error {
+	overflow: hidden;
+	text-wrap: nowrap;
+	text-overflow: ellipsis;
+}
+
+// Styles for MatSnackBar
 .mat-snack-bar-error {
 	background-color: $error-background-color;
 	font-weight: 600;

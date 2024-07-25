@@ -42,7 +42,9 @@ export class ReactiveControlErrorDirective {
 	private updateView(): void {
 		this.viewContainer.clear();
 
-		if (this.control?.invalid) {
+		// this.control?.setErrors({ noIguales: true });
+
+		if (!!this.control?.errors) {
 			this.el.nativeElement.textContent = this.getErrorMessage();
 			return;
 		}

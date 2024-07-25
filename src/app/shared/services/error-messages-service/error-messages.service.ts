@@ -17,7 +17,6 @@ export class ErrorMessagesService {
 		let errorFn = null;
 		if (!!error && !!name) {
 			errorFn = errors[error] ?? errorMessages?.[error];
-			console.log(errorFn);
 		}
 
 		if (!!errorFn) {
