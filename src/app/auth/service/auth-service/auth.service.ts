@@ -21,7 +21,7 @@ export class AuthService {
 	) {}
 
 	login(login: Login): Observable<any> {
-		const url = `${environment.auth.baseUrl}/${environment.auth.login}`;
+		const url = `${environment.auth.baseUrl}`;
 		return this.http.post(url, login).pipe(
 			catchError((error) => {
 				this.utilSvc.openBasicSnackBar(this.errorMessage, this.snackBarConfig);

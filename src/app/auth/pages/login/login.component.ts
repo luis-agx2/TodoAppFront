@@ -31,7 +31,7 @@ export class LoginComponent {
 		const { email, password } = this.formLogin.getRawValue();
 		this.authSvc.login({ email, password }).subscribe({
 			next: (resp) => {
-				localStorage.setItem('token', resp.token);
+				localStorage.setItem('token', resp.jwt);
 			}
 		});
 	}

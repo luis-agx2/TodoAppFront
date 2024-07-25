@@ -4,10 +4,9 @@
 
 export const environment = {
 	production: false,
-	baseUrl: 'localhost:8080/TodoAppRest/api',
+	baseUrl: 'http://localhost:8080/TodoAppRest/api',
 	auth: {
-		baseUrl: 'localhost:8080/TodoAppRest/api/auth',
-		login: '',
+		baseUrl: 'http://localhost:8080/api/auth',
 		register: 'register'
 	}
 };

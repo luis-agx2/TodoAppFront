@@ -55,3 +55,12 @@ a {
 		font-weight: 500;
 	}
 }
+
+.mat-snack-bar-success {
+	background-color: $success-background-color;
+	font-weight: 600;
+
+	@include media($mobile-size) {
+		font-weight: 500;
+	}
+}

@@ -1,5 +1,8 @@
 <div id="container-register">
-	<h2 class="mat-h2">Register</h2>
+	<div id="header-container-register">
+		<mat-icon id="go-back-arrow" (click)="goBack()">arrow_back</mat-icon>
+		<h2 class="mat-h2">Register</h2>
+	</div>
 
 	<div id="container-form">
 		<!-- Image -->
@@ -54,15 +57,9 @@
 
 				<!-- Confirm password field -->
 				<mat-form-field class="field-register" appearance="outline">
-					<mat-label>Password</mat-label>
+					<mat-label>Confirm password</mat-label>
 					<input type="password" matInput formControlName="confirm_password" />
-					<mat-error
-						[appReactiveControlError]="formRegister.get('confirm_password')"
-						[fieldName]="'confirm password'"
-						[customErrorMessages]="customErrorMessagesForControls"
-					>
-						Invalid field
-					</mat-error>
+					<mat-error> Passwords must match </mat-error>
 				</mat-form-field>
 				<!-- Confirm password field -->
 

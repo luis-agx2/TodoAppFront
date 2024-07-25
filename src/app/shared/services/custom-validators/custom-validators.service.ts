@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { regex } from '../../data/regex';
 
 @Injectable({
@@ -26,5 +26,11 @@ export class CustomValidatorsService {
 
 	atLeastSymbol(control: AbstractControl): ValidationErrors | null {
 		return !regex.symbol.exec(control.value) ? { no_symbol: true } : null;
+	}
+
+	matchControls(controlOne: string, controlTwo: string): ValidatorFn {
+		return (form: AbstractControl): ValidationErrors | null => {
+			return form.get(controlOne)?.value !== form.get(controlTwo)?.value ? { no_match_fields: true } : null;
+		};
 	}
 }
