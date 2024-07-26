@@ -33,7 +33,10 @@
 				<!-- Password field -->
 
 				<!-- Button submit login -->
-				<button type="submit" mat-raised-button color="primary">Sign in</button>
+				<button type="submit" mat-raised-button color="primary">
+					Sign in
+					<mat-spinner [diameter]="20" *ngIf="spinnerStatus | async"></mat-spinner>
+				</button>
 				<!-- Button submit login -->
 			</form>
 

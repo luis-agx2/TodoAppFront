@@ -129,3 +129,15 @@
 		}
 	}
 }
+
+:host ::ng-deep.mat-progress-spinner circle {
+	stroke: white !important;
+	stroke-width: 5% !important;
+}
+
+:host ::ng-deep button[type='submit'] .mat-button-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+}

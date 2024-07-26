@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -18,7 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatInputModule,
 		MatFormFieldModule,
 		MatButtonModule,
-		MatSnackBarModule
+		MatSnackBarModule,
+		MatProgressSpinnerModule
 	]
 })
 export class MaterialModule {}

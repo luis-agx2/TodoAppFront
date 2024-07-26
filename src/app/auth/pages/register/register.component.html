@@ -64,7 +64,10 @@
 				<!-- Confirm password field -->
 
 				<!-- Button submit -->
-				<button type="submit" mat-raised-button color="primary" [disabled]="formRegister.invalid">Register</button>
+				<button type="submit" mat-raised-button color="primary" [disabled]="formRegister.invalid">
+					Register
+					<mat-spinner [diameter]="20" *ngIf="spinnerStatus | async"></mat-spinner>
+				</button>
 				<!-- Button submit -->
 			</form>
 		</div>

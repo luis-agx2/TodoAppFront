@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { UtilsService } from '../../../shared/services/utils-service/utils.service';
 import { AuthService } from '../../service/auth-service/auth.service';
 
 @Component({
@@ -10,16 +12,20 @@ import { AuthService } from '../../service/auth-service/auth.service';
 })
 export class LoginComponent {
 	formLogin: FormGroup;
+	spinnerStatus: Observable<boolean>;
 
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
-		private authSvc: AuthService
+		private authSvc: AuthService,
+		private utilsSvc: UtilsService
 	) {
 		this.formLogin = this.fb.group({
 			email: ['', [Validators.required]],
 			password: ['', [Validators.required]]
 		});
+
+		this.spinnerStatus = utilsSvc.spinnerLoading();
 	}
 
 	sendSubmit(): void {

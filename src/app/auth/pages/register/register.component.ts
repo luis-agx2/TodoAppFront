@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ErrorMessage } from '../../../shared/interfaces/error-message.interface';
 import { CustomValidatorsService } from '../../../shared/services/custom-validators/custom-validators.service';
 import { UtilsService } from '../../../shared/services/utils-service/utils.service';
@@ -14,6 +15,7 @@ import { AuthService } from '../../service/auth-service/auth.service';
 })
 export class RegisterComponent {
 	customErrorMessagesForControls: ErrorMessage;
+	spinnerStatus: Observable<boolean>;
 
 	formRegister = this.fb.group(
 		{
@@ -46,6 +48,7 @@ export class RegisterComponent {
 		private router: Router,
 		private location: Location
 	) {
+		this.spinnerStatus = utilSvc.spinnerLoading();
 		this.customErrorMessagesForControls = this.buildCustomErrorMessages();
 	}
 
