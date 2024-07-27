@@ -1,10 +1,12 @@
+@import './../../../../assets/scss/variables.scss';
+
 #layout-todo {
 	width: 100% !important;
 	position: relative;
 
 	mat-toolbar {
 		color: white !important;
-		height: 60px;
+		height: $toolbar-height;
 	}
 
 	#main-container {
@@ -13,6 +15,10 @@
 
 		#content {
 			flex-grow: 1;
+			// La altura maxima son 100 - la altura del toolbar, para que los espacios cuadre
+			max-height: calc(100vh - $toolbar-height);
+			height: calc(100vh - $toolbar-height);
+			overflow-y: auto;
 		}
 	}
 }

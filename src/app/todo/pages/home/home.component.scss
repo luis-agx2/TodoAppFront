@@ -1,0 +1,6 @@
+@import './../../../../assets/scss/variables.scss';
+
+#main-content {
+	// La altura minina es el 100vh - la altura del toolbar para que se cubra todo el espacio
+	min-height: calc(100vh - $toolbar-height) !important;
+}

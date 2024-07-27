@@ -16,7 +16,7 @@ ul {
 .nav {
 	width: max-content;
 	// Para el height al 100vh le restamos el tamaño del alto de toolbar para que cubra bien la pantalla
-	min-height: calc(100vh - 60px);
+	min-height: calc(100vh - $toolbar-height);
 	height: auto;
 	background-color: $primary-color;
 	padding: 0 5px;
