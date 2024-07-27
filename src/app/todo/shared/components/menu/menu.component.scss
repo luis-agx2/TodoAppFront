@@ -1,5 +1,11 @@
 @import './../../../../../assets/scss/variables.scss';
 
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
 p,
 figure,
 ul {
@@ -14,6 +20,7 @@ ul {
 	height: auto;
 	background-color: $primary-color;
 	padding: 0 5px;
+	transition: left 0.5s;
 
 	.nav-list {
 		padding: 0;
@@ -34,6 +41,10 @@ ul {
 				cursor: pointer;
 			}
 
+			&.active {
+				background-color: $primary-active-color;
+			}
+
 			.nav-figure {
 				display: flex;
 				align-items: center;
@@ -47,6 +58,7 @@ ul {
 
 		.nav-item.nav-item-theme {
 			margin-top: auto;
+
 			.nav-figure {
 				padding: 0 1rem;
 			}
@@ -91,6 +103,35 @@ ul {
 				background-color: $primary-color;
 				cursor: pointer;
 			}
+		}
+	}
+}
+
+@include media($mobile-size) {
+	.nav {
+		width: 100%;
+		position: absolute;
+		left: -100%;
+
+		.nav-list {
+			width: 100%;
+
+			.nav-item {
+				grid-template-columns: max-content 1fr;
+
+				.nav-show .nav-name {
+					font-family: $font-family-mobile;
+					letter-spacing: 0.4px;
+					font-weight: 500;
+					font-size: 16px;
+				}
+			}
+		}
+
+		&:has(.nav-list.open) {
+			width: 100%;
+			position: absolute;
+			left: 0%;
 		}
 	}
 }

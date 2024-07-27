@@ -1,21 +1,17 @@
 <nav class="nav" [ngClass]="{ dark: themeIcon === 'dark_mode' }">
 	<ul class="nav-list" [ngClass]="{ open: show === true }">
-		<li class="nav-item">
+		<li
+			class="nav-item"
+			*ngFor="let option of menuOptions"
+			[routerLink]="[option.path]"
+			[routerLinkActiveOptions]="{ exact: true }"
+			routerLinkActive="active"
+		>
 			<figure class="nav-figure">
-				<!-- <img src="" alt="" class="nav-img"> -->
-				<mat-icon class="nav-img">home</mat-icon>
+				<mat-icon class="nav-img">{{ option.icon }}</mat-icon>
 			</figure>
 			<article class="nav-show">
-				<p class="nav-name">Home</p>
-			</article>
-		</li>
-
-		<li class="nav-item">
-			<figure class="nav-figure">
-				<mat-icon class="nav-img">tasks</mat-icon>
-			</figure>
-			<article class="nav-show">
-				<p class="nav-name">Tasks</p>
+				<p class="nav-name">{{ option.name }}</p>
 			</article>
 		</li>
 
@@ -28,7 +24,7 @@
 			</article>
 		</li>
 
-		<li class="nav-item nav-item-settings">
+		<li class="nav-item nav-item-settings" routerLink="/preferences">
 			<figure class="nav-figure">
 				<mat-icon class="nav-img">settings</mat-icon>
 			</figure>
@@ -48,7 +44,7 @@
 
 			<article class="nav-show">
 				<div class="nav-name nav-name-user">
-					<p class="nav-username">Luis Alejandro</p>
+					<p class="nav-username">{{ userName }}</p>
 					<p class="nav-account">Free</p>
 				</div>
 			</article>

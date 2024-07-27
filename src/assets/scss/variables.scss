@@ -2,7 +2,8 @@
 	--primary-color: #7c4dff;
 	--accent-color: #2979ff;
 	--warn-color: #e53935;
-	--primary-hover-color: #816bbd;
+	--primary-hover-color: #6843ce;
+	--primary-active-color: #8860f8;
 }
 
 body.dark-mode {
@@ -24,3 +25,4 @@ $primary-color: var(--primary-color);
 $accent-color: var(--accent-color);
 $warn-color: var(--warn-color);
 $primary-hover-color: var(--primary-hover-color);
+$primary-active-color: var(--primary-active-color);

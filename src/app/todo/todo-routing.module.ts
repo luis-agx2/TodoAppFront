@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { PreferencesComponent } from './pages/preferences/preferences.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 
 const routes: Routes = [
@@ -9,12 +11,20 @@ const routes: Routes = [
 		component: LayoutComponent,
 		children: [
 			{
-				path: 'tasks',
+				path: '',
+				component: HomeComponent
+			},
+			{
+				path: 'my-tasks',
 				component: TasksComponent
 			},
 			{
+				path: 'preferences',
+				component: PreferencesComponent
+			},
+			{
 				path: '**',
-				redirectTo: 'tasks'
+				redirectTo: 'my-tasks'
 			}
 		]
 	}

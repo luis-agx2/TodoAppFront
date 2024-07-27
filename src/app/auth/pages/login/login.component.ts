@@ -38,6 +38,7 @@ export class LoginComponent {
 		this.authSvc.login({ email, password }).subscribe({
 			next: (resp) => {
 				localStorage.setItem('token', resp.jwt);
+				this.router.navigate(['/']);
 			}
 		});
 	}

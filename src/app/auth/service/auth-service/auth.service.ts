@@ -63,6 +63,15 @@ export class AuthService {
 		return decodedToken?.authorities?.map((authority: any) => authority.authority);
 	}
 
+	get username(): string {
+		if (!this.token) {
+			return 'Username';
+		}
+
+		const decodedToken = this.jwtHelper.decodeToken(this.token);
+		return decodedToken?.username ?? 'Username';
+	}
+
 	hasAnyRole(allowedRoles: string[]): boolean {
 		return allowedRoles.some((allowRole) => {
 			return this.roles.some((role) => allowRole.toLocaleUpperCase() === role.toLocaleUpperCase());
