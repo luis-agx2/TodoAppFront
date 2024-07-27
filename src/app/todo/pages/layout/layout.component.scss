@@ -1,0 +1,18 @@
+#layout-todo {
+	width: 100% !important;
+	position: relative;
+
+	mat-toolbar {
+		color: white !important;
+		height: 60px;
+	}
+
+	#main-container {
+		display: flex;
+		width: 100%;
+
+		#content {
+			flex-grow: 1;
+		}
+	}
+}

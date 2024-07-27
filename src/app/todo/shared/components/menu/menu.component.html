@@ -1,0 +1,57 @@
+<nav class="nav" [ngClass]="{ dark: themeIcon === 'dark_mode' }">
+	<ul class="nav-list" [ngClass]="{ open: show === true }">
+		<li class="nav-item">
+			<figure class="nav-figure">
+				<!-- <img src="" alt="" class="nav-img"> -->
+				<mat-icon class="nav-img">home</mat-icon>
+			</figure>
+			<article class="nav-show">
+				<p class="nav-name">Home</p>
+			</article>
+		</li>
+
+		<li class="nav-item">
+			<figure class="nav-figure">
+				<mat-icon class="nav-img">tasks</mat-icon>
+			</figure>
+			<article class="nav-show">
+				<p class="nav-name">Tasks</p>
+			</article>
+		</li>
+
+		<li class="nav-item nav-item-theme">
+			<figure class="nav-figure">
+				<mat-icon class="nav-img" (click)="toggleTheme()">{{ themeIcon }}</mat-icon>
+			</figure>
+			<article class="nav-show">
+				<mat-slide-toggle [formControl]="themeControl"></mat-slide-toggle>
+			</article>
+		</li>
+
+		<li class="nav-item nav-item-settings">
+			<figure class="nav-figure">
+				<mat-icon class="nav-img">settings</mat-icon>
+			</figure>
+			<article class="nav-show">
+				<p class="nav-name">Settings</p>
+			</article>
+		</li>
+
+		<li class="nav-item nav-item-user">
+			<figure class="nav-figure">
+				<img
+					src="https://img.freepik.com/premium-vector/animal-trainer-vector-character-flat-style_1033579-57766.jpg?w=740"
+					alt="profile-picture"
+					class="nav-img nav-img-avatar"
+				/>
+			</figure>
+
+			<article class="nav-show">
+				<div class="nav-name nav-name-user">
+					<p class="nav-username">Luis Alejandro</p>
+					<p class="nav-account">Free</p>
+				</div>
+			</article>
+		</li>
+	</ul>
+</nav>

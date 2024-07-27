@@ -1,0 +1,16 @@
+<div id="layout-todo">
+	<mat-toolbar color="primary">
+		<button mat-icon-button class="example-icon" aria-label="Toggle menu" (click)="toggleMenu()">
+			<mat-icon>menu</mat-icon>
+		</button>
+		<span>Todo App</span>
+	</mat-toolbar>
+
+	<div id="main-container">
+		<app-menu [show]="showFullMenu"></app-menu>
+
+		<div id="content">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

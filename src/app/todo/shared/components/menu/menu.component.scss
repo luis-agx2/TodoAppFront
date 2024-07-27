@@ -1,0 +1,96 @@
+@import './../../../../../assets/scss/variables.scss';
+
+p,
+figure,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+.nav {
+	width: max-content;
+	// Para el height al 100vh le restamos el tamaño del alto de toolbar para que cubra bien la pantalla
+	min-height: calc(100vh - 60px);
+	height: auto;
+	background-color: $primary-color;
+	padding: 0 5px;
+
+	.nav-list {
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+
+		.nav-item {
+			display: grid;
+			grid-template-columns: max-content 0fr;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			transition: grid-template-columns 0.2s;
+			border-radius: 5px;
+
+			&:hover {
+				background-color: $primary-hover-color;
+				cursor: pointer;
+			}
+
+			.nav-figure {
+				display: flex;
+				align-items: center;
+				padding: 1rem;
+			}
+
+			.nav-show {
+				overflow: hidden;
+			}
+		}
+
+		.nav-item.nav-item-theme {
+			margin-top: auto;
+			.nav-figure {
+				padding: 0 1rem;
+			}
+		}
+
+		.nav-item.nav-item-user {
+			position: relative;
+			margin-top: 10px;
+
+			&::after {
+				content: '';
+				position: absolute;
+				height: 1px;
+				width: 100%;
+				top: -5px;
+				background-color: white;
+			}
+
+			.nav-img.nav-img-avatar {
+				width: 35px;
+			}
+
+			.nav-img-avatar {
+				aspect-ratio: 1/1;
+				object-fit: cover;
+			}
+
+			.nav-name-user {
+				white-space: nowrap;
+				padding-right: 1.2em;
+			}
+		}
+	}
+
+	&:has(.nav-list.open) {
+		position: absolute;
+
+		.nav-item {
+			grid-template-columns: max-content 1fr;
+
+			&.nav-item-theme:hover {
+				background-color: $primary-color;
+				cursor: pointer;
+			}
+		}
+	}
+}
