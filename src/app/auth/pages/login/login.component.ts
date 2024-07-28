@@ -25,7 +25,7 @@ export class LoginComponent {
 			password: ['', [Validators.required]]
 		});
 
-		this.spinnerStatus = utilsSvc.spinnerLoading();
+		this.spinnerStatus = this.utilsSvc.spinnerLoading();
 	}
 
 	sendSubmit(): void {

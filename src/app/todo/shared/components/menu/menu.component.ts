@@ -1,7 +1,8 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../../../auth/service/auth-service/auth.service';
+import { UserPreferencesService } from '../../../services/user-preferences/user-preferences.service';
 import { MENU } from '../../data/menu';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 
@@ -10,7 +11,7 @@ import { MenuItem } from '../../interfaces/menu-item.interface';
 	templateUrl: './menu.component.html',
 	styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
 	@Input() show = false;
 
 	menuOptions: MenuItem[];
@@ -20,14 +21,44 @@ export class MenuComponent {
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
-		private authSvc: AuthService
+		private authSvc: AuthService,
+		private userPreferencesSvc: UserPreferencesService
 	) {
-		let mergedOptionsMenu: any;
-
-		this.menuOptions = [];
-		this.themeControl = new FormControl();
-		this.themeIcon = 'dark_mode';
+		this.menuOptions = this.buildUserMenu();
 		this.userName = authSvc.username;
+		this.themeIcon = 'light_mode';
+
+		this.themeControl = new FormControl();
+
+		this.themeControl.valueChanges.subscribe({
+			next: (checked) => {
+				if (checked) {
+					this.themeIcon = 'light_mode';
+					this.document.body.classList.add('dark-mode');
+				} else {
+					this.themeIcon = 'dark_mode';
+					this.document.body.classList.remove('dark-mode');
+				}
+			}
+		});
+	}
+
+	ngOnInit(): void {
+		setTimeout(() => {
+			this.getPreferences();
+		}, 2000);
+	}
+
+	getPreferences(): void {
+		this.userPreferencesSvc.getMyPreferences().subscribe({
+			next: (preferences) => {
+				this.themeControl.setValue(preferences[`theme`] === 'DARK');
+			}
+		});
+	}
+
+	buildUserMenu(): MenuItem[] {
+		let mergedOptionsMenu: any;
 
 		this.authSvc.roles.map((role) => {
 			const options = MENU?.[role.toLocaleUpperCase()] ?? [];
@@ -36,18 +67,7 @@ export class MenuComponent {
 			mergedOptionsMenu = { ...currentOptions, ...mergedOptionsMenu };
 		});
 
-		this.menuOptions = Object.entries(mergedOptionsMenu).map((entry) => entry[1]) as MenuItem[];
-
-		this.themeControl.valueChanges.subscribe({
-			next: (checked) => {
-				if (checked) {
-					this.themeIcon = 'light_mode';
-				} else {
-					this.themeIcon = 'dark_mode';
-				}
-				this.document.body.classList.toggle('dark-mode');
-			}
-		});
+		return Object.entries(mergedOptionsMenu).map((entry) => entry[1]) as MenuItem[];
 	}
 
 	toggleTheme(): void {

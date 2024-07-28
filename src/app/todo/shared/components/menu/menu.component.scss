@@ -89,6 +89,12 @@ ul {
 			.nav-name-user {
 				white-space: nowrap;
 				padding-right: 1.2em;
+
+				.nav-username {
+					max-width: 140px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
 			}
 		}
 	}

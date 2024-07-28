@@ -8,6 +8,10 @@ export const environment = {
 	auth: {
 		baseUrl: 'http://localhost:8080/TodoAppRest/api/auth',
 		register: 'register'
+	},
+	preferences: {
+		baseUrl: 'http://localhost:8080/TodoAppRest/api/preferences',
+		myPreferences: 'me'
 	}
 };
 

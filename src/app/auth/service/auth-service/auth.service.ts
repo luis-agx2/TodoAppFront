@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { noAddToken } from '../../../shared/data/context-niterceptor-token';
 import { UtilsService } from '../../../shared/services/utils-service/utils.service';
 import { Login } from '../../interfaces/login.interface';
 import { Register } from '../../interfaces/register.interface';
@@ -25,7 +26,7 @@ export class AuthService {
 
 	login(login: Login): Observable<any> {
 		const url = `${environment.auth.baseUrl}`;
-		return this.http.post(url, login).pipe(
+		return this.http.post(url, login, { context: noAddToken() }).pipe(
 			catchError((error) => {
 				this.utilSvc.openBasicSnackBar(this.errorMessage, this.snackBarConfig);
 				throw error;
@@ -35,7 +36,7 @@ export class AuthService {
 
 	register(data: Register): Observable<any> {
 		const url = `${environment.auth.baseUrl}/${environment.auth.register}`;
-		return this.http.post(url, data).pipe(
+		return this.http.post(url, data, { context: noAddToken() }).pipe(
 			catchError((error) => {
 				this.utilSvc.openBasicSnackBar(this.errorMessage, this.snackBarConfig);
 				throw error;
@@ -69,7 +70,7 @@ export class AuthService {
 		}
 
 		const decodedToken = this.jwtHelper.decodeToken(this.token);
-		return decodedToken?.username ?? 'Username';
+		return decodedToken?.name ?? 'Username';
 	}
 
 	hasAnyRole(allowedRoles: string[]): boolean {

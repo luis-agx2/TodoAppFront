@@ -14,6 +14,5 @@ export class LayoutComponent {
 
 	toggleMenu(): void {
 		this.showFullMenu = !this.showFullMenu;
-		console.log(this.showFullMenu);
 	}
 }
