@@ -6,6 +6,12 @@
 	}
 }
 
+@mixin skeleton-animation() {
+	background: linear-gradient(90deg, $primary-color 25%, #e0e0e0 50%, $primary-color 75%);
+	background-size: 200% 100%;
+	animation: loading 1s infinite;
+}
+
 p,
 figure,
 ul {
@@ -26,6 +32,15 @@ ul {
 		padding: 0;
 		display: flex;
 		flex-direction: column;
+
+		&.open .nav-item {
+			grid-template-columns: max-content 1fr;
+
+			&.nav-item-theme:hover {
+				background-color: $primary-color;
+				cursor: pointer;
+			}
+		}
 
 		.nav-item {
 			display: grid;
@@ -99,17 +114,59 @@ ul {
 		}
 	}
 
-	&:has(.nav-list.open) {
-		position: absolute;
+	// Styles for menu skeleton loading only
+	.nav-list.loading {
+		gap: 0.5px;
 
-		.nav-item {
-			grid-template-columns: max-content 1fr;
+		.nav-item:not(.nav-item-user) {
+			@include skeleton-animation();
+		}
 
-			&.nav-item-theme:hover {
-				background-color: $primary-color;
-				cursor: pointer;
+		.nav-item .nav-figure {
+			width: 67px;
+			height: 57px;
+		}
+
+		.nav-item .nav-show .nav-name {
+			width: 100px;
+		}
+
+		.nav-item.nav-item-theme .nav-figure {
+			width: 56px;
+			height: 24px;
+		}
+
+		.nav-item.nav-item-user .nav-figure {
+			width: 67px;
+			height: 67px;
+
+			@include skeleton-animation();
+		}
+
+		.nav-item.nav-item-user .nav-name-user {
+			.nav-username,
+			.nav-account {
+				width: 100px;
+				height: 14px;
+				margin-top: 1px;
+
+				@include skeleton-animation();
 			}
 		}
+	}
+
+	&:has(.nav-list.open) {
+		position: absolute;
+	}
+}
+
+// Animacion del skeleton loader
+@keyframes loading {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
 	}
 }
 

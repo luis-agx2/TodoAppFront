@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../auth/service/auth-service/auth.service';
-import { UserPreferencesService } from '../../../services/user-preferences/user-preferences.service';
 import { MENU } from '../../data/menu';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 
@@ -11,26 +11,45 @@ import { MenuItem } from '../../interfaces/menu-item.interface';
 	templateUrl: './menu.component.html',
 	styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnChanges, OnDestroy {
 	@Input() show = false;
+	@Input() loading = true;
 
 	menuOptions: MenuItem[];
-	themeControl: FormControl;
-	themeIcon: 'light_mode' | 'dark_mode';
+	themeControl!: FormControl;
+	themeIcon!: 'light_mode' | 'dark_mode';
 	userName: string;
+	isMenuInBuildProgress: boolean;
+
+	themeControlSubscription!: Subscription;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
-		private authSvc: AuthService,
-		private userPreferencesSvc: UserPreferencesService
+		private authSvc: AuthService
 	) {
-		this.menuOptions = this.buildUserMenu();
-		this.userName = authSvc.username;
-		this.themeIcon = 'light_mode';
+		this.startListeners();
 
-		this.themeControl = new FormControl();
+		this.isMenuInBuildProgress = true;
+		this.menuOptions = [];
+		this.userName = '';
+	}
 
-		this.themeControl.valueChanges.subscribe({
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes[`loading`] && changes[`loading`].currentValue === false) {
+			this.menuOptions = this.buildUserMenu();
+			this.userName = this.authSvc.username;
+			this.setThemePreferences();
+			this.isMenuInBuildProgress = false;
+		}
+	}
+
+	ngOnDestroy(): void {
+		this.themeControlSubscription.unsubscribe();
+	}
+
+	startListeners(): void {
+		this.themeControl = new FormControl(false);
+		this.themeControlSubscription = this.themeControl.valueChanges.subscribe({
 			next: (checked) => {
 				if (checked) {
 					this.themeIcon = 'light_mode';
@@ -39,20 +58,6 @@ export class MenuComponent implements OnInit {
 					this.themeIcon = 'dark_mode';
 					this.document.body.classList.remove('dark-mode');
 				}
-			}
-		});
-	}
-
-	ngOnInit(): void {
-		setTimeout(() => {
-			this.getPreferences();
-		}, 2000);
-	}
-
-	getPreferences(): void {
-		this.userPreferencesSvc.getMyPreferences().subscribe({
-			next: (preferences) => {
-				this.themeControl.setValue(preferences[`theme`] === 'DARK');
 			}
 		});
 	}
@@ -68,6 +73,12 @@ export class MenuComponent implements OnInit {
 		});
 
 		return Object.entries(mergedOptionsMenu).map((entry) => entry[1]) as MenuItem[];
+	}
+
+	setThemePreferences(): void {
+		const preferences = JSON.parse(sessionStorage.getItem('user_preferences') ?? '{}');
+
+		this.themeControl.setValue(preferences[`theme`] === 'DARK');
 	}
 
 	toggleTheme(): void {
