@@ -40,20 +40,20 @@ export class GenericTableComponent {
 	}
 
 	clickColumn(itemClicked: any): void {
-		this.emitTableEvent('clicked_column', { column: itemClicked });
+		this.emitTableEvent('clicked_column', { column: { ...itemClicked } });
 	}
 
 	changeSelect(selectChange: MatSelectChange, row: any, column: any): void {
 		const value = {
 			selected: selectChange.value,
-			column: row
+			column: { ...row }
 		};
 
 		this.emitTableEvent(`option_change_${column}`, value);
 	}
 
 	paginatorChange(event: any): void {
-		this.emitTableEvent('change_paginator', event);
+		this.emitTableEvent('change_paginator', { ...event });
 	}
 
 	emitTableEvent(action: string, value: any): void {
