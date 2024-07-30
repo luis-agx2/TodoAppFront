@@ -19,6 +19,7 @@
 			max-height: calc(100vh - $toolbar-height);
 			height: calc(100vh - $toolbar-height);
 			overflow-y: auto;
+			padding: 10px;
 		}
 	}
 }

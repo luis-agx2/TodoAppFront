@@ -6,4 +6,14 @@
 	.mat-h2 {
 		text-align: center;
 	}
+
+	#content {
+		display: flex;
+		flex-direction: column;
+
+		#view-section {
+			display: flex;
+			justify-content: end;
+		}
+	}
 }
