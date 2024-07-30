@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ErrorMessage } from '../../../shared/interfaces/error-message.interface';
-import { CustomValidatorsService } from '../../../shared/services/custom-validators/custom-validators.service';
-import { UtilsService } from '../../../shared/services/utils-service/utils.service';
+import { ErrorMessage } from '../../../generics/interfaces/error-message.interface';
+import { CustomValidatorsService } from '../../../generics/services/custom-validators/custom-validators.service';
+import { UtilsService } from '../../../generics/services/utils-service/utils.service';
 import { AuthService } from '../../service/auth-service/auth.service';
 
 @Component({

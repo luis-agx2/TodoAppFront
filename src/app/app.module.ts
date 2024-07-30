@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoaderInterceptor } from './generics/interceptor/loader-interceptor/loader.interceptor';
+import { TokenInterceptor } from './generics/interceptor/token-interceptor/token.interceptor';
 import { MaterialModule } from './material.module';
-import { LoaderInterceptor } from './shared/interceptor/loader-interceptor/loader.interceptor';
-import { TokenInterceptor } from './shared/interceptor/token-interceptor/token.interceptor';
 
 @NgModule({
 	declarations: [AppComponent],

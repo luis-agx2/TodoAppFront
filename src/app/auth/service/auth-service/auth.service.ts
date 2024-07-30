@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { noAddToken } from '../../../shared/data/context-niterceptor-token';
-import { UtilsService } from '../../../shared/services/utils-service/utils.service';
+import { noAddToken } from '../../../generics/data/context-niterceptor-token';
+import { UtilsService } from '../../../generics/services/utils-service/utils.service';
 import { Login } from '../../interfaces/login.interface';
 import { Register } from '../../interfaces/register.interface';
 
