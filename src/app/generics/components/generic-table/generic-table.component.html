@@ -15,12 +15,7 @@
 				<ng-template #noSortableColumn>{{ column.header }}</ng-template>
 			</th>
 
-			<td
-				mat-cell
-				*matCellDef="let row"
-				[ngClass]="{ 'select-column-generic-table': column.isSelect }"
-				(click)="clickColumn(row)"
-			>
+			<td mat-cell *matCellDef="let row" [ngClass]="{ 'select-column-generic-table': column.isSelect }">
 				<ng-container *ngIf="column.isSelect; else plainColumn">
 					<mat-form-field appearance="standard" class="select-generic-table">
 						<mat-select
@@ -33,8 +28,11 @@
 						</mat-select>
 					</mat-form-field>
 				</ng-container>
+
 				<ng-template #plainColumn>
-					{{ column.cell(row) }}
+					<div (click)="clickColumn(row)">
+						{{ column.cell(row) }}
+					</div>
 				</ng-template>
 			</td>
 		</ng-container>
@@ -44,6 +42,7 @@
 	</table>
 
 	<mat-paginator
+		[pageIndex]="paginator.pageIndex"
 		[length]="paginator.length"
 		[pageSize]="paginator.pageSize"
 		[pageSizeOptions]="pageSizeOptions"

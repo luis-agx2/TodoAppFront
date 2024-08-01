@@ -11,6 +11,7 @@ import { GenericTablePaginator } from '../../interfaces/generic-table.interface'
 export class GenericTableComponent {
 	@Input() set dataTable(dataTable: any[]) {
 		this.dataSource = dataTable ?? [];
+		console.log(this.dataSource);
 	}
 
 	@Input() set columnsTable(columnsTable: any[]) {
