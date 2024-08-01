@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UtilsService } from '../../../shared/services/utils-service/utils.service';
+import { UtilsService } from '../../../generics/services/utils-service/utils.service';
 import { AuthService } from '../../service/auth-service/auth.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class LoginComponent {
 			password: ['', [Validators.required]]
 		});
 
-		this.spinnerStatus = utilsSvc.spinnerLoading();
+		this.spinnerStatus = this.utilsSvc.spinnerLoading();
 	}
 
 	sendSubmit(): void {
@@ -38,6 +38,7 @@ export class LoginComponent {
 		this.authSvc.login({ email, password }).subscribe({
 			next: (resp) => {
 				localStorage.setItem('token', resp.jwt);
+				this.router.navigate(['/']);
 			}
 		});
 	}

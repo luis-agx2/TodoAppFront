@@ -1,0 +1,97 @@
+@import './../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+#table-container {
+	overflow: auto;
+	min-height: 67vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border: 1px solid #ececec;
+	border-radius: 2px;
+
+	&::-webkit-scrollbar {
+		height: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		border: 1px solid #9d9d9d;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #ccc;
+		border-radius: 2px;
+	}
+
+	.mat-paginator {
+		position: sticky;
+		left: 0;
+	}
+}
+
+:host ::ng-deep {
+	.generic-table {
+		min-width: 800px;
+		width: 100%;
+
+		tr.mat-row {
+			height: 45px !important;
+		}
+
+		.select-column-generic-table {
+			min-width: 90px !important;
+			width: 90px;
+
+			.mat-form-field.select-generic-table {
+				width: 90px !important;
+
+				.mat-form-field-wrapper {
+					padding-bottom: 0 !important;
+
+					.mat-form-field-flex {
+						padding-top: 0 !important;
+					}
+				}
+
+				.mat-form-field-infix {
+					border: 1px solid #ccc;
+					border-radius: 99px;
+					padding: 0 !important;
+
+					.mat-select {
+						padding: 2px 0px;
+					}
+
+					.mat-select .mat-select-trigger .mat-select-value {
+						padding-left: 8px !important;
+					}
+				}
+
+				.mat-form-field-underline {
+					display: none;
+				}
+			}
+		}
+
+		.mat-header-cell {
+			font-size: 14px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+		}
+	}
+
+	@include media($mobile-size) {
+		.generic-table {
+			.mat-header-cell {
+				font-size: 14px;
+				font-weight: 500;
+				letter-spacing: 0.4px;
+			}
+		}
+	}
+}

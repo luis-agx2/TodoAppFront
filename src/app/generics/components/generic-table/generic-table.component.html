@@ -1,0 +1,54 @@
+<div id="table-container">
+	<table
+		aria-describedby="Generic table"
+		mat-table
+		[dataSource]="dataSource"
+		matSort
+		matSortDisableClear
+		class="generic-table"
+	>
+		<ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+			<th mat-header-cell *matHeaderCellDef scope="col" [style.width]="column.width ?? 'auto'">
+				<ng-container *ngIf="column.sort; else noSortableColumn">
+					<span mat-sort-header disableClear>{{ column.header }}</span>
+				</ng-container>
+				<ng-template #noSortableColumn>{{ column.header }}</ng-template>
+			</th>
+
+			<td
+				mat-cell
+				*matCellDef="let row"
+				[ngClass]="{ 'select-column-generic-table': column.isSelect }"
+				(click)="clickColumn(row)"
+			>
+				<ng-container *ngIf="column.isSelect; else plainColumn">
+					<mat-form-field appearance="standard" class="select-generic-table">
+						<mat-select
+							[ngModel]="column.selectConfig.optionSelected(row)"
+							(selectionChange)="changeSelect($event, row, column.columnDef)"
+						>
+							<mat-option *ngFor="let option of column.selectConfig.options" [value]="option.value">{{
+								option.name
+							}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</ng-container>
+				<ng-template #plainColumn>
+					{{ column.cell(row) }}
+				</ng-template>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	</table>
+
+	<mat-paginator
+		[length]="paginator.length"
+		[pageSize]="paginator.pageSize"
+		[pageSizeOptions]="pageSizeOptions"
+		aria-label="Select page"
+		(page)="paginatorChange($event)"
+	>
+	</mat-paginator>
+</div>

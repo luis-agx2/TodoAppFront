@@ -1,7 +1,31 @@
+:root {
+	--primary-color: #7c4dff;
+	--accent-color: #2979ff;
+	--warn-color: #e53935;
+	--primary-hover-color: #6843ce;
+	--primary-active-color: #8860f8;
+	--text-color: #001b43;
+}
+
+body.dark-mode {
+	--primary-color: #5c6bc0;
+	--accent-color: #2979ff;
+	--warn-color: #e53935;
+	--primary-hover-color: #6d7bca;
+	--text-color: #ffffff;
+}
+
+$mobile-size: 768px;
+$toolbar-height: 60px;
+
 $font-family-web: 'Open sans', sans-serif;
 $font-family-mobile: 'Roboto', sans-serif;
-$text-color: #001b43;
 $error-background-color: #f44336;
 $success-background-color: #64dd17;
 
-$mobile-size: 768px;
+$primary-color: var(--primary-color);
+$accent-color: var(--accent-color);
+$warn-color: var(--warn-color);
+$primary-hover-color: var(--primary-hover-color);
+$primary-active-color: var(--primary-active-color);
+$text-color: var(--text-color);

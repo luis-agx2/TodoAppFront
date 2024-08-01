@@ -1,0 +1,19 @@
+#tasks-container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.mat-h2 {
+		text-align: center;
+	}
+
+	#content {
+		display: flex;
+		flex-direction: column;
+
+		#view-section {
+			display: flex;
+			justify-content: end;
+		}
+	}
+}

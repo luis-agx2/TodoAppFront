@@ -1,0 +1,200 @@
+@import './../../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+@mixin skeleton-animation() {
+	background: linear-gradient(90deg, $primary-color 25%, #e0e0e0 50%, $primary-color 75%);
+	background-size: 200% 100%;
+	animation: loading 1s infinite;
+}
+
+p,
+figure,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+.nav {
+	width: max-content;
+	// Para el height al 100vh le restamos el tamaño del alto de toolbar para que cubra bien la pantalla
+	min-height: calc(100vh - $toolbar-height);
+	height: auto;
+	background-color: $primary-color;
+	padding: 0 5px;
+	transition: left 0.5s;
+
+	.nav-list {
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+
+		&.open .nav-item {
+			grid-template-columns: max-content 1fr;
+
+			&.nav-item-theme:hover {
+				background-color: $primary-color;
+				cursor: pointer;
+			}
+		}
+
+		.nav-item {
+			display: grid;
+			grid-template-columns: max-content 0fr;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			transition: grid-template-columns 0.2s;
+			border-radius: 5px;
+
+			&:hover {
+				background-color: $primary-hover-color;
+				cursor: pointer;
+			}
+
+			&.active {
+				background-color: $primary-active-color;
+			}
+
+			.nav-figure {
+				display: flex;
+				align-items: center;
+				padding: 1rem;
+			}
+
+			.nav-show {
+				overflow: hidden;
+			}
+		}
+
+		.nav-item.nav-item-theme {
+			margin-top: auto;
+
+			.nav-figure {
+				padding: 0 1rem;
+			}
+		}
+
+		.nav-item.nav-item-user {
+			position: relative;
+			margin-top: 10px;
+
+			&::after {
+				content: '';
+				position: absolute;
+				height: 1px;
+				width: 100%;
+				top: -5px;
+				background-color: white;
+			}
+
+			.nav-img.nav-img-avatar {
+				width: 35px;
+			}
+
+			.nav-img-avatar {
+				aspect-ratio: 1/1;
+				object-fit: cover;
+			}
+
+			.nav-name-user {
+				white-space: nowrap;
+				padding-right: 1.2em;
+
+				.nav-username {
+					max-width: 140px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+		}
+	}
+
+	// Styles for menu skeleton loading only
+	.nav-list.loading {
+		gap: 0.5px;
+
+		.nav-item:not(.nav-item-user) {
+			@include skeleton-animation();
+		}
+
+		.nav-item .nav-figure {
+			width: 67px;
+			height: 57px;
+		}
+
+		.nav-item .nav-show .nav-name {
+			width: 100px;
+		}
+
+		.nav-item.nav-item-theme .nav-figure {
+			width: 56px;
+			height: 24px;
+		}
+
+		.nav-item.nav-item-user .nav-figure {
+			width: 67px;
+			height: 67px;
+
+			@include skeleton-animation();
+		}
+
+		.nav-item.nav-item-user .nav-name-user {
+			.nav-username,
+			.nav-account {
+				width: 100px;
+				height: 14px;
+				margin-top: 1px;
+
+				@include skeleton-animation();
+			}
+		}
+	}
+
+	&:has(.nav-list.open) {
+		position: absolute;
+	}
+}
+
+// Animacion del skeleton loader
+@keyframes loading {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+@include media($mobile-size) {
+	.nav {
+		width: 100%;
+		position: absolute;
+		left: -100%;
+
+		.nav-list {
+			width: 100%;
+
+			.nav-item {
+				grid-template-columns: max-content 1fr;
+
+				.nav-show .nav-name {
+					font-family: $font-family-mobile;
+					letter-spacing: 0.4px;
+					font-weight: 500;
+					font-size: 16px;
+				}
+			}
+		}
+
+		&:has(.nav-list.open) {
+			width: 100%;
+			position: absolute;
+			left: 0%;
+		}
+	}
+}

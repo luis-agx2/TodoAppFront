@@ -1,0 +1,30 @@
+<div id="tasks-container">
+	<h2 class="mat-h2">Tasks</h2>
+
+	<div id="content">
+		<div id="view-section">
+			<app-generic-view-select
+				title="View"
+				appearance="outline"
+				[selectedView]="selectedView"
+				[options]="optionsGenericSelectView"
+				(event)="onSelectedViewChange($event)"
+			></app-generic-view-select>
+		</div>
+
+		<div class="mb-3">
+			<ng-container *ngIf="selectedView === 'list_view'">
+				<app-generic-table
+					[dataTable]="dataTable"
+					[columnsTable]="columnsTable"
+					[paginator]="paginatorTable"
+					(tableEvent)="eventTableHandler($event)"
+				></app-generic-table>
+			</ng-container>
+
+			<ng-container *ngIf="selectedView === 'grid_view'">
+				<app-dashboard></app-dashboard>
+			</ng-container>
+		</div>
+	</div>
+</div>

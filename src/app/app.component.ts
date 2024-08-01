@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
@@ -31,14 +30,6 @@ export class AppComponent implements OnDestroy {
 			this.document.body.classList.add('font-mobile');
 		} else {
 			this.document.body.classList.remove('font-mobile');
-		}
-	}
-
-	changeTheme(toggle: MatSlideToggleChange): void {
-		if (toggle.checked) {
-			this.document.body.classList.add('dark-mode');
-		} else {
-			this.document.body.classList.remove('dark-mode');
 		}
 	}
 }

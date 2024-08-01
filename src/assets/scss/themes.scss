@@ -1,4 +1,5 @@
 @use '@angular/material' as material;
+@import './variables.scss';
 
 @include material.core();
 
@@ -6,9 +7,9 @@
 $light-theme: material.define-light-theme(
 	(
 		color: (
-			primary: material.define-palette(material.$cyan-palette, 400),
-			accent: material.define-palette(material.$teal-palette, A400),
-			warn: material.define-palette(material.$red-palette, 600)
+			primary: material.define-palette(material.$deep-purple-palette, A200),
+			accent: material.define-palette(material.$pink-palette, 300),
+			warn: material.define-palette(material.$red-palette, 400)
 		),
 		density: 0
 	)
@@ -17,9 +18,9 @@ $light-theme: material.define-light-theme(
 $dark-theme: material.define-dark-theme(
 	(
 		color: (
-			primary: material.define-palette(material.$deep-purple-palette, A200),
-			accent: material.define-palette(material.$pink-palette, 300),
-			warn: material.define-palette(material.$red-palette, 400)
+			primary: material.define-palette(material.$indigo-palette, 400),
+			accent: material.define-palette(material.$blue-gray-palette, A400),
+			warn: material.define-palette(material.$red-palette, 600)
 		),
 		density: 0
 	)
