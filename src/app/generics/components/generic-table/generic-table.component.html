@@ -5,7 +5,7 @@
 		[dataSource]="dataSource"
 		matSort
 		matSortDisableClear
-		class="mat-elevation-z8 generic-table"
+		class="generic-table"
 	>
 		<ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
 			<th mat-header-cell *matHeaderCellDef scope="col" [style.width]="column.width ?? 'auto'">
@@ -27,7 +27,9 @@
 							[ngModel]="column.selectConfig.optionSelected(row)"
 							(selectionChange)="changeSelect($event, row, column.columnDef)"
 						>
-							<mat-option *ngFor="let option of column.selectConfig.options" [value]="option">{{ option }}</mat-option>
+							<mat-option *ngFor="let option of column.selectConfig.options" [value]="option.value">{{
+								option.name
+							}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</ng-container>
@@ -42,8 +44,8 @@
 	</table>
 
 	<mat-paginator
-		[length]="lengthData"
-		[pageSize]="pageSize"
+		[length]="paginator.length"
+		[pageSize]="paginator.pageSize"
 		[pageSizeOptions]="pageSizeOptions"
 		aria-label="Select page"
 		(page)="paginatorChange($event)"

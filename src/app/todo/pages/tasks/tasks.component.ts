@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { CustomGenericEvent } from '../../../generics/interfaces/custom-events.interface';
+import { GenericTableColumn, GenericTablePaginator } from '../../../generics/interfaces/generic-table.interface';
 import { GenericViewSelectOption } from '../../../generics/interfaces/generic-view-select-options.interface';
+import { TableWithPagination } from '../../../generics/interfaces/table-with-pagination.interface';
+import { UtilsService } from '../../../generics/services/utils-service/utils.service';
+import { TASK_STATUS } from '../../data/task-status';
+import { Task } from '../../interfaces/task.interface';
+import { TasksService } from '../../services/tasks-service/tasks.service';
 
 @Component({
 	selector: 'app-tasks',
@@ -11,65 +17,37 @@ export class TasksComponent {
 	selectedView: string;
 	optionsGenericSelectView: GenericViewSelectOption[];
 
-	dataTable = [
-		{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', item: 'a' },
-		{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', item: 'b' },
-		{ position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', item: 'c' },
-		{ position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be', item: 'a' },
-		{ position: 5, name: 'Boron', weight: 10.811, symbol: 'B', item: 'a' },
-		{ position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C', item: 'c' },
-		{ position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', item: 'b' },
-		{ position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O', item: 'b' },
-		{ position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F', item: 'a' },
-		{ position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', item: 'c' }
-	];
+	dataTable: any[];
 
-	columnsTable = [
-		{
-			width: '100px',
-			columnDef: 'position',
-			header: 'No.',
-			cell: (element: any) => `${element.position}`,
-			sort: true,
-			isSelect: false
-		},
-		{
-			columnDef: 'name',
-			header: 'Name',
-			cell: (element: any) => `${element.name}`,
-			sort: true,
-			isSelect: false
-		},
-		{
-			columnDef: 'weight',
-			header: 'Weight',
-			cell: (element: any) => `${element.weight}`,
-			sort: true,
-			isSelect: false
-		},
-		{
-			columnDef: 'symbol',
-			header: 'Symbol',
-			cell: (element: any) => `${element.symbol}`,
-			sort: true,
-			isSelect: false
-		},
-		{
-			columnDef: 'select',
-			header: 'Select',
-			cell: (element: any) => `${element.symbol}`,
-			sort: false,
-			isSelect: true,
-			selectConfig: {
-				options: ['a', 'b', 'c'],
-				optionSelected: (element: any) => `${element.item}`
-			}
-		}
-	];
+	columnsTable: GenericTableColumn[];
+	paginatorTable: GenericTablePaginator;
 
-	constructor() {
+	constructor(
+		private utilsSvc: UtilsService,
+		private tasksSvc: TasksService
+	) {
 		this.selectedView = 'list_view';
 		this.optionsGenericSelectView = this.buildViewMenu();
+		this.columnsTable = this.buildColumnsTable();
+		this.dataTable = [];
+		this.paginatorTable = { length: 0, pageIndex: 0, previousPageIndex: 0, pageSize: 10 };
+
+		this.getAllTasks();
+	}
+
+	getAllTasks(page: number = 0, size: number = 1): void {
+		this.tasksSvc.getAllMe(page, size).subscribe({
+			next: (res: TableWithPagination<Task>) => {
+				this.paginatorTable = {
+					length: res.totalElements,
+					pageIndex: res.number,
+					previousPageIndex: res.number === 0 ? 0 : res.number - 1,
+					pageSize: res.size
+				};
+
+				this.dataTable = res.content;
+			}
+		});
 	}
 
 	onSelectedViewChange(event: CustomGenericEvent): void {
@@ -88,6 +66,10 @@ export class TasksComponent {
 			},
 			change_paginator: () => {
 				console.log('paginator change', event.value);
+				this.paginatorTable = event.value;
+				console.log(this.paginatorTable);
+
+				this.getAllTasks(this.paginatorTable.pageIndex, this.paginatorTable.pageSize);
 			}
 		} as any;
 
@@ -109,6 +91,48 @@ export class TasksComponent {
 				id: 'list_view',
 				name: 'List',
 				value: 'list_view'
+			}
+		];
+	}
+
+	buildColumnsTable(): GenericTableColumn[] {
+		const optionsTaskStatus = TASK_STATUS;
+
+		return [
+			{
+				columnDef: 'name',
+				header: 'Name',
+				cell: (element: any) => `${element.name}`,
+				sort: true,
+				isSelect: false,
+				selectConfig: null
+			},
+			{
+				columnDef: 'description',
+				header: 'Description',
+				cell: (element: any) => `${element.description}`,
+				sort: true,
+				isSelect: false,
+				selectConfig: null
+			},
+			{
+				columnDef: 'category',
+				header: 'Category',
+				cell: (element: any) => `${element.category.name}`,
+				sort: true,
+				isSelect: false,
+				selectConfig: null
+			},
+			{
+				columnDef: 'status',
+				header: 'Status',
+				cell: (element: any) => `${element.status}`,
+				sort: true,
+				isSelect: true,
+				selectConfig: {
+					options: optionsTaskStatus,
+					optionSelected: (element: any) => `${element.status}`
+				}
 			}
 		];
 	}

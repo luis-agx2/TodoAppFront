@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { CustomGenericEvent } from '../../interfaces/custom-events.interface';
+import { GenericTablePaginator } from '../../interfaces/generic-table.interface';
 
 @Component({
 	selector: 'app-generic-table',
@@ -10,7 +11,6 @@ import { CustomGenericEvent } from '../../interfaces/custom-events.interface';
 export class GenericTableComponent {
 	@Input() set dataTable(dataTable: any[]) {
 		this.dataSource = dataTable ?? [];
-		this.lengthData = dataTable?.length ?? 0;
 	}
 
 	@Input() set columnsTable(columnsTable: any[]) {
@@ -18,14 +18,12 @@ export class GenericTableComponent {
 		this.displayedColumns = columnsTable.map((c) => c.columnDef);
 	}
 
-	@Input() pageSize: number;
+	@Input() paginator: GenericTablePaginator;
 	@Input() pageSizeOptions: number[];
 
 	columns: any[];
 	dataSource: any[];
 	displayedColumns: string[];
-
-	lengthData: number;
 
 	@Output() tableEvent = new EventEmitter<CustomGenericEvent>();
 	@Output() paginatorEvent = new EventEmitter<CustomGenericEvent>();
@@ -34,9 +32,8 @@ export class GenericTableComponent {
 		this.dataSource = [];
 		this.columns = [];
 		this.displayedColumns = [];
-		this.lengthData = 0;
-		this.pageSize = 10;
-		this.pageSizeOptions = [5, 10];
+		this.paginator = { length: 0, pageIndex: 0, previousPageIndex: 0, pageSize: 10 };
+		this.pageSizeOptions = [1, 5, 10];
 	}
 
 	clickColumn(itemClicked: any): void {

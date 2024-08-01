@@ -12,6 +12,10 @@ export const environment = {
 	preferences: {
 		baseUrl: 'http://localhost:8080/TodoAppRest/api/preferences',
 		myPreferences: 'me'
+	},
+	tasks: {
+		baseUrl: 'http://localhost:8080/TodoAppRest/api/tasks',
+		me: 'me'
 	}
 };
 
