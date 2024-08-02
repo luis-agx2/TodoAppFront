@@ -1,0 +1,50 @@
+@import './../../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+#container-task-details-dialog {
+	width: 100%;
+	height: 100%;
+
+	#header-task-details-dialog {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+
+		mat-icon {
+			position: absolute;
+			left: 0;
+			cursor: pointer;
+		}
+
+		#title {
+			font-weight: 600;
+			letter-spacing: 0.2px;
+			margin-bottom: 0;
+		}
+	}
+}
+
+@include media($mobile-size) {
+	#container-task-details-dialog {
+		#header-task-details-dialog {
+			justify-content: left;
+
+			mat-icon {
+				position: relative;
+				margin-right: 25px;
+			}
+
+			#title {
+				font-size: 18px;
+				font-family: $font-family-mobile;
+				font-weight: 500;
+			}
+		}
+	}
+}

@@ -1,3 +1,11 @@
+@import './../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
 #tasks-container {
 	height: 100%;
 	display: flex;
@@ -29,4 +37,35 @@
 
 :host ::ng-deep.spinner-tasks.mat-progress-spinner circle {
 	stroke-width: 5% !important;
+}
+
+::ng-deep.task-details-dialog-web {
+	position: absolute !important;
+	right: 0;
+
+	.mat-dialog-container {
+		padding: 16px;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+
+::ng-deep.task-details-dialog-mobile {
+	max-width: 100vw !important;
+
+	.mat-dialog-container {
+		border-radius: 0;
+	}
+}
+
+@include media($mobile-size) {
+	app-generic-view-select {
+		width: 100%;
+	}
+
+	#tasks-container {
+		#content #view-section {
+			justify-content: center;
+		}
+	}
 }

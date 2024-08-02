@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MatFormField } from '@angular/material/form-field';
 import { MatSelectChange } from '@angular/material/select';
 import { CustomGenericEvent } from '../../interfaces/custom-events.interface';
 import { GenericViewSelectOption } from '../../interfaces/generic-view-select-options.interface';
@@ -9,8 +10,11 @@ import { GenericViewSelectOption } from '../../interfaces/generic-view-select-op
 	styleUrls: ['./generic-view-select.component.scss']
 })
 export class GenericViewSelectComponent implements OnChanges {
+	@ViewChild('genericViewFormField') matFormField!: MatFormField;
+
 	@Input() appearance: 'outline' | 'fill';
 	@Input() title: string;
+	@Input() fieldClass?: string;
 	@Input() panelClass?: string;
 	@Input() options: GenericViewSelectOption[];
 	@Input() selectedView: string;

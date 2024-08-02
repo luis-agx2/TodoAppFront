@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UtilsService {
 	private spinnerLoading$ = new ReplaySubject<boolean>(1);
+	private isMobile$ = new BehaviorSubject<boolean | null>(null);
 
 	constructor(private snackBar: MatSnackBar) {}
 
@@ -27,5 +28,13 @@ export class UtilsService {
 
 	setSpinnerLoading(loading: boolean): void {
 		this.spinnerLoading$.next(loading);
+	}
+
+	isMobile(): boolean | null {
+		return this.isMobile$.value;
+	}
+
+	setIsMobile(isMobile: boolean): void {
+		this.isMobile$.next(isMobile);
 	}
 }

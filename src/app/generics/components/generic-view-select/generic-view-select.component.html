@@ -1,4 +1,4 @@
-<mat-form-field [appearance]="appearance" class="generic-view-form-field">
+<mat-form-field [appearance]="appearance" class="generic-view-form-field" [ngClass]="!!fieldClass ? fieldClass : ''">
 	<mat-label>{{ title }}</mat-label>
 	<mat-select (selectionChange)="optionChange($event)" [panelClass]="panelClasses" [(ngModel)]="selectedView">
 		<mat-option *ngFor="let option of options" [value]="option.value">

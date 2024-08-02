@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { CustomGenericEvent } from '../../../generics/interfaces/custom-events.interface';
 import { GenericTableColumn, GenericTablePaginator } from '../../../generics/interfaces/generic-table.interface';
@@ -8,6 +9,7 @@ import { UtilsService } from '../../../generics/services/utils-service/utils.ser
 import { TASK_STATUS } from '../../data/task-status';
 import { Task, UpdateTask } from '../../interfaces/task.interface';
 import { TasksService } from '../../services/tasks-service/tasks.service';
+import { TaskDetailsComponent } from '../../shared/components/task-details/task-details.component';
 
 @Component({
 	selector: 'app-tasks',
@@ -15,6 +17,7 @@ import { TasksService } from '../../services/tasks-service/tasks.service';
 	styleUrls: ['./tasks.component.scss']
 })
 export class TasksComponent {
+	isMobile: boolean;
 	selectedView: string;
 	optionsGenericSelectView: GenericViewSelectOption[];
 	dataTable: any[];
@@ -28,8 +31,10 @@ export class TasksComponent {
 
 	constructor(
 		private utilsSvc: UtilsService,
-		private tasksSvc: TasksService
+		private tasksSvc: TasksService,
+		private dialog: MatDialog
 	) {
+		this.isMobile = utilsSvc.isMobile() ?? false;
 		this.spinnerStatus = this.utilsSvc.spinnerLoading();
 		this.selectedView = 'list_view';
 		this.optionsGenericSelectView = this.buildViewMenu();
@@ -50,7 +55,7 @@ export class TasksComponent {
 		const actions = {
 			clicked_column: () => {
 				// console.log('click column table', event.value);
-				console.log('open dialog  ');
+				this.openDialogTask(event.value.column);
 			},
 			option_change_status: () => {
 				this.updateTask(event.value.column.id, { status: event.value.selected });
@@ -148,5 +153,33 @@ export class TasksComponent {
 				}
 			}
 		];
+	}
+
+	openDialogTask(data: Task): void {
+		if (!this.isMobile) {
+			this.openTaskDetailsWeb(data);
+			return;
+		}
+
+		this.openTaskDetailsMobile(data);
+	}
+
+	openTaskDetailsWeb(data: Task): void {
+		this.dialog.open(TaskDetailsComponent, {
+			data,
+			panelClass: ['task-details-dialog-web'],
+			width: '30%',
+			height: '100%',
+			minWidth: '300px'
+		});
+	}
+
+	openTaskDetailsMobile(data: Task): void {
+		this.dialog.open(TaskDetailsComponent, {
+			data,
+			panelClass: ['task-details-dialog-mobile'],
+			width: '100%',
+			height: '100%'
+		});
 	}
 }

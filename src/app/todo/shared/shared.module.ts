@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../material.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { TaskDetailsComponent } from './components/task-details/task-details.component';
 
 @NgModule({
-	declarations: [MenuComponent, DashboardComponent],
+	declarations: [MenuComponent, DashboardComponent, TaskDetailsComponent],
 	imports: [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule],
 	exports: [MenuComponent, DashboardComponent]
 })
