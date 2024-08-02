@@ -26,6 +26,7 @@ ul {
 	height: auto;
 	background-color: $primary-color;
 	padding: 0 5px;
+	z-index: 999;
 	transition: left 0.5s;
 
 	.nav-list {

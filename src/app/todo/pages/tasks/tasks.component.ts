@@ -36,17 +36,18 @@ export class TasksComponent {
 	) {
 		this.isMobile = utilsSvc.isMobile() ?? false;
 		this.spinnerStatus = this.utilsSvc.spinnerLoading();
-		this.selectedView = 'list_view';
+		this.selectedView = this.setSelectedView();
 		this.optionsGenericSelectView = this.buildViewMenu();
 		this.columnsTable = this.buildColumnsTable();
 		this.dataTable = [];
 		this.paginatorTable = { length: 0, pageIndex: 0, previousPageIndex: 0, pageSize: 10 };
 
-		this.getAllTasks();
+		this.getMeTasks();
 	}
 
 	onSelectedViewChange(event: CustomGenericEvent): void {
 		this.selectedView = event.value;
+		this.getMeTasks();
 	}
 
 	eventTableHandler(event: CustomGenericEvent): void {
@@ -74,6 +75,14 @@ export class TasksComponent {
 		}
 	}
 
+	getMeTasks(): void {
+		if (this.selectedView === 'list_view') {
+			this.getAllTasks();
+		} else {
+			this.getAllTasksDashboard();
+		}
+	}
+
 	getAllTasks(page: number = 0, size: number = 10): void {
 		this.tasksSvc.getAllMe(page, size).subscribe({
 			next: (res: TableWithPagination<Task>) => {
@@ -89,6 +98,14 @@ export class TasksComponent {
 		});
 	}
 
+	getAllTasksDashboard(): void {
+		this.tasksSvc.getAllMeDashboard().subscribe({
+			next: (resp) => {
+				console.log(resp);
+			}
+		});
+	}
+
 	updateTask(taskId: number, data: UpdateTask): void {
 		this.tasksSvc.updateMe(taskId, data).subscribe({
 			next: () => {
@@ -96,6 +113,12 @@ export class TasksComponent {
 				this.getAllTasks(this.paginatorTable.pageIndex, this.paginatorTable.pageSize);
 			}
 		});
+	}
+
+	setSelectedView(): string {
+		const preferences = JSON.parse(sessionStorage.getItem('user_preferences') ?? '{}');
+
+		return preferences[`dashBoardView`] && preferences[`dashBoardView`] === 'LIST' ? 'list_view' : 'grid_view';
 	}
 
 	buildViewMenu(): GenericViewSelectOption[] {

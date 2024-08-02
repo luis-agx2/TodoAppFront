@@ -4,4 +4,57 @@
 		<mat-icon (click)="closeDialog()" *ngIf="isMobile">close</mat-icon>
 		<h3 id="title">Task Details</h3>
 	</div>
+
+	<div id="body-task-details-dialog">
+		<h3 class="sub-title">{{ data.name }}</h3>
+
+		<p class="text">{{ data.description }}</p>
+
+		<article id="category">
+			<div id="title-category">
+				<p class="sub-title">{{ data.category.name }}</p>
+				<span id="color-category" [style.background-color]="data.category.color"></span>
+			</div>
+
+			<p id="description-category" class="text">{{ data.category.description }}</p>
+		</article>
+
+		<article id="status">
+			<p class="sub-title">Status</p>
+			<p class="text">{{ statusName }}</p>
+		</article>
+
+		<article id="dates">
+			<span class="date">
+				<p class="sub-title">Start Date</p>
+				<p class="text">{{ data.startDate }}</p>
+			</span>
+
+			<span class="date">
+				<p class="sub-title">End Date</p>
+				<p class="text">{{ data.endDate ?? 'This task is not yet complete' }}</p>
+			</span>
+		</article>
+
+		<article id="comments">
+			<p class="sub-title">Comments</p>
+			<span id="comments-container">
+				<ng-container *ngIf="loadingStatus | async; else contentLoaded">
+					<div id="spinner-container">
+						<mat-spinner class="spinner-task-details" diameter="30"></mat-spinner>
+					</div>
+				</ng-container>
+
+				<ng-template #contentLoaded>
+					<ng-container *ngFor="let comment of taskComments">
+						<h5 class="comment-title">{{ comment.title }}</h5>
+						<p class="text comment-text">{{ comment.message }}</p>
+						<hr />
+					</ng-container>
+
+					<p class="text mb-0 text-center" *ngIf="taskComments.length === 0">No comments to show...</p>
+				</ng-template>
+			</span>
+		</article>
+	</div>
 </section>

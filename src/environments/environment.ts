@@ -15,6 +15,11 @@ export const environment = {
 	},
 	tasks: {
 		baseUrl: 'http://localhost:8080/TodoAppRest/api/tasks',
+		me: 'me',
+		dashboard: 'dashboard'
+	},
+	comments: {
+		baseUrl: 'http://localhost:8080/TodoAppRest/api/comments',
 		me: 'me'
 	}
 };

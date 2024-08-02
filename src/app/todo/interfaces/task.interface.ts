@@ -1,7 +1,8 @@
 export interface Task {
 	category: Category;
 	description: string;
-	endDate: Date;
+	endDate: Date | null;
+	startDate: Date;
 	id: number;
 	name: string;
 	status: string;
