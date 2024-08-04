@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -34,7 +35,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 		MatSortModule,
 		MatMenuModule,
 		MatPaginatorModule,
-		MatDialogModule
+		MatDialogModule,
+		DragDropModule
 	]
 })
 export class MaterialModule {}
