@@ -1,5 +1,11 @@
 @import './../../../../../assets/scss/variables.scss';
 
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
 #container-dashboard {
 	display: flex;
 	gap: 10px;
@@ -48,6 +54,18 @@
 		letter-spacing: 0.2px;
 		font-weight: normal;
 		color: $text-color;
+	}
+}
+
+:host::ng-deep.mat-fab {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 40px;
+	height: 40px;
+
+	.mat-button-wrapper {
+		padding: 0 !important;
 	}
 }
 
@@ -101,4 +119,20 @@
 
 .cdk-drop-list-dragging .cdk-drag-placeholder {
 	cursor: grabbing !important;
+}
+
+@include media($mobile-size) {
+	.task-card {
+		.card-header {
+			h5 {
+				font-family: $font-family-mobile;
+				font-weight: 500;
+			}
+		}
+	}
+
+	.text {
+		font-family: $font-family-mobile;
+		letter-spacing: 0.4px !important;
+	}
 }

@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomGenericEvent } from '../../../../generics/interfaces/custom-events.interface';
 import { TASK_STATUS } from '../../../data/task-status';
 import { DashboardTask } from '../../../interfaces/dashboard-task.interface';
@@ -16,7 +17,7 @@ export class DashboardComponent {
 
 	@Output() dashBoardEvent = new EventEmitter<CustomGenericEvent>();
 
-	constructor() {
+	constructor(private router: Router) {
 		this.dataGrid = {
 			cancelled: [],
 			completed: [],
@@ -27,8 +28,6 @@ export class DashboardComponent {
 	}
 
 	drop(dragAndDrop: CdkDragDrop<Task[]>): void {
-		console.log(dragAndDrop);
-
 		if (dragAndDrop.previousContainer === dragAndDrop.container) {
 			moveItemInArray(dragAndDrop.container.data, dragAndDrop.previousIndex, dragAndDrop.currentIndex);
 		} else {
@@ -48,7 +47,17 @@ export class DashboardComponent {
 		}
 	}
 
+	clickItem(task: Task): void {
+		const data = {
+			item: task
+		};
+
+		this.emitEvent('clicked_item', data);
+	}
+
 	getStatusByColumnId(id: string): string {
+		console.log(id);
+
 		const a = {
 			cancelled: () => this.taskStatus.find((item) => item.value === 'CANCELLED')?.value,
 			completed: () => this.taskStatus.find((item) => item.value === 'COMPLETED')?.value,
@@ -68,5 +77,9 @@ export class DashboardComponent {
 
 	emitEvent(action: string, value: any): void {
 		this.dashBoardEvent.emit({ action, value });
+	}
+
+	redirectToAdd(): void {
+		this.router.navigate(['/create-task']);
 	}
 }

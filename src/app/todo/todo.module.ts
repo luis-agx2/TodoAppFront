@@ -9,9 +9,10 @@ import { PreferencesComponent } from './pages/preferences/preferences.component'
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { SharedModule } from './shared/shared.module';
 import { TodoRoutingModule } from './todo-routing.module';
+import { CreateTaskComponent } from './pages/tasks/create-task/create-task.component';
 
 @NgModule({
-	declarations: [LayoutComponent, TasksComponent, HomeComponent, PreferencesComponent],
+	declarations: [LayoutComponent, TasksComponent, HomeComponent, PreferencesComponent, CreateTaskComponent],
 	imports: [CommonModule, TodoRoutingModule, SharedModule, MaterialModule, GenericsModule]
 })
 export class TodoModule {}

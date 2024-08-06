@@ -81,7 +81,9 @@ export class TasksComponent {
 
 		const actions = {
 			clicked_item: () => {
-				this.openDialogTask(event.value.column);
+				console.log('ave');
+
+				this.openDialogTask(event.value.item);
 			},
 			drag_and_drop: () => {
 				this.updateTask(event.value.item.id, { status: event.value.new_status });

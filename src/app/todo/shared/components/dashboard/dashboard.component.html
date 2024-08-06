@@ -1,10 +1,16 @@
 <section id="container-dashboard" cdkDropListGroup>
 	<article class="column-dashboard">
-		<h3 class="title-column">New</h3>
+		<h3 class="title-column mb-0">New</h3>
 
 		<div id="new" class="cards" cdkDropList [cdkDropListData]="dataGrid.news" (cdkDropListDropped)="drop($event)">
 			<ng-container *ngIf="dataGrid.news.length > 0; else emptyContent">
-				<div class="task-card" *ngFor="let task of dataGrid?.news" cdkDrag [cdkDragData]="task">
+				<div
+					class="task-card"
+					*ngFor="let task of dataGrid?.news"
+					cdkDrag
+					[cdkDragData]="task"
+					(click)="clickItem(task)"
+				>
 					<div class="card-header">
 						<h5>{{ task?.name }}</h5>
 						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
@@ -19,10 +25,10 @@
 	</article>
 
 	<article class="column-dashboard">
-		<h3 class="title-column">In progress</h3>
+		<h3 class="title-column mb-0">In progress</h3>
 
 		<div
-			id="in-progress"
+			id="in_progress"
 			class="cards"
 			cdkDropList
 			[cdkDropListData]="dataGrid.inProgress"
@@ -44,7 +50,7 @@
 	</article>
 
 	<article class="column-dashboard">
-		<h3 class="title-column">Paused</h3>
+		<h3 class="title-column mb-0">Paused</h3>
 
 		<div id="paused" class="cards" cdkDropList [cdkDropListData]="dataGrid.paused" (cdkDropListDropped)="drop($event)">
 			<ng-container *ngIf="dataGrid.paused.length > 0; else emptyContent">
@@ -63,7 +69,7 @@
 	</article>
 
 	<article class="column-dashboard">
-		<h3 class="title-column">Completed</h3>
+		<h3 class="title-column mb-0">Completed</h3>
 
 		<div
 			id="completed"
@@ -88,7 +94,7 @@
 	</article>
 
 	<article class="column-dashboard">
-		<h3 class="title-column">Cancelled</h3>
+		<h3 class="title-column mb-0">Cancelled</h3>
 
 		<div
 			id="cancelled"
@@ -113,8 +119,12 @@
 	</article>
 </section>
 
+<button mat-fab color="primary" aria-label="Icon button with a add icon" (click)="redirectToAdd()">
+	<mat-icon>add</mat-icon>
+</button>
+
 <ng-template #emptyContent>
 	<div class="w-100 h-100 m-auto">
-		<p class="mb-0 text-center">No elements</p>
+		<p class="mb-0 text-center text">No elements</p>
 	</div>
 </ng-template>
