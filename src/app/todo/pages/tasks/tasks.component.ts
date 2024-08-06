@@ -20,7 +20,8 @@ export class TasksComponent {
 	isMobile: boolean;
 	selectedView: string;
 	optionsGenericSelectView: GenericViewSelectOption[];
-	dataTable: any[];
+	dataTable: Task[];
+	dataGrid: any;
 	columnsTable: GenericTableColumn[];
 	paginatorTable: GenericTablePaginator;
 
@@ -75,6 +76,25 @@ export class TasksComponent {
 		}
 	}
 
+	eventDashboardHandler(event: CustomGenericEvent): void {
+		console.log(event);
+
+		const actions = {
+			clicked_item: () => {
+				this.openDialogTask(event.value.column);
+			},
+			drag_and_drop: () => {
+				this.updateTask(event.value.item.id, { status: event.value.new_status });
+			}
+		} as any;
+
+		const action = actions[event.action];
+
+		if (!!action) {
+			action();
+		}
+	}
+
 	getMeTasks(): void {
 		if (this.selectedView === 'list_view') {
 			this.getAllTasks();
@@ -101,7 +121,7 @@ export class TasksComponent {
 	getAllTasksDashboard(): void {
 		this.tasksSvc.getAllMeDashboard().subscribe({
 			next: (resp) => {
-				console.log(resp);
+				this.dataGrid = resp;
 			}
 		});
 	}

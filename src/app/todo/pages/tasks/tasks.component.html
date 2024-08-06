@@ -30,7 +30,7 @@
 				</ng-container>
 
 				<ng-container *ngIf="selectedView === 'grid_view'">
-					<app-dashboard></app-dashboard>
+					<app-dashboard [dataGrid]="dataGrid" (dashBoardEvent)="eventDashboardHandler($event)"></app-dashboard>
 				</ng-container>
 			</div>
 		</div>
