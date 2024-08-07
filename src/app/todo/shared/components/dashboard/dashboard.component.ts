@@ -61,7 +61,7 @@ export class DashboardComponent {
 		const a = {
 			cancelled: () => this.taskStatus.find((item) => item.value === 'CANCELLED')?.value,
 			completed: () => this.taskStatus.find((item) => item.value === 'COMPLETED')?.value,
-			paused: () => this.taskStatus.find((item) => item.value === 'PAUSED')?.value,
+			paused: () => this.taskStatus.find((item) => item.value === 'PAUSE')?.value,
 			in_progress: () => this.taskStatus.find((item) => item.value === 'IN_PROGRESS')?.value,
 			new: () => this.taskStatus.find((item) => item.value === 'NEW')?.value
 		} as any;

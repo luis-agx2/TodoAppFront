@@ -35,7 +35,13 @@
 			(cdkDropListDropped)="drop($event)"
 		>
 			<ng-container *ngIf="dataGrid.inProgress.length > 0; else emptyContent">
-				<div class="task-card" *ngFor="let task of dataGrid?.inProgress" cdkDrag [cdkDragData]="task">
+				<div
+					class="task-card"
+					*ngFor="let task of dataGrid?.inProgress"
+					cdkDrag
+					[cdkDragData]="task"
+					(click)="clickItem(task)"
+				>
 					<div class="card-header">
 						<h5>{{ task?.name }}</h5>
 						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
@@ -54,7 +60,13 @@
 
 		<div id="paused" class="cards" cdkDropList [cdkDropListData]="dataGrid.paused" (cdkDropListDropped)="drop($event)">
 			<ng-container *ngIf="dataGrid.paused.length > 0; else emptyContent">
-				<div class="task-card" *ngFor="let task of dataGrid?.paused" cdkDrag [cdkDragData]="task">
+				<div
+					class="task-card"
+					*ngFor="let task of dataGrid?.paused"
+					cdkDrag
+					[cdkDragData]="task"
+					(click)="clickItem(task)"
+				>
 					<div class="card-header">
 						<h5>{{ task?.name }}</h5>
 						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
@@ -79,7 +91,13 @@
 			(cdkDropListDropped)="drop($event)"
 		>
 			<ng-container *ngIf="dataGrid.completed.length > 0; else emptyContent">
-				<div class="task-card" *ngFor="let task of dataGrid?.completed" cdkDrag [cdkDragData]="task">
+				<div
+					class="task-card"
+					*ngFor="let task of dataGrid?.completed"
+					cdkDrag
+					[cdkDragData]="task"
+					(click)="clickItem(task)"
+				>
 					<div class="card-header">
 						<h5>{{ task?.name }}</h5>
 						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
@@ -104,7 +122,13 @@
 			(cdkDropListDropped)="drop($event)"
 		>
 			<ng-container *ngIf="dataGrid.cancelled.length > 0; else emptyContent">
-				<div class="task-card" *ngFor="let task of dataGrid?.cancelled" cdkDrag [cdkDragData]="task">
+				<div
+					class="task-card"
+					*ngFor="let task of dataGrid?.cancelled"
+					cdkDrag
+					[cdkDragData]="task"
+					(click)="clickItem(task)"
+				>
 					<div class="card-header">
 						<h5>{{ task?.name }}</h5>
 						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
