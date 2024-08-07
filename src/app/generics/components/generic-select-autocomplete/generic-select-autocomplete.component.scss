@@ -1,0 +1,9 @@
+.mat-hint-mat-error {
+	color: #ef5350;
+}
+
+:host ::ng-deep {
+	.generic-select-autocomplete {
+		width: 100%;
+	}
+}

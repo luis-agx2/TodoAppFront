@@ -9,12 +9,15 @@ export interface Task {
 }
 
 export interface Category {
+	id: number;
 	color: string;
 	description: string;
 	name: string;
 }
 
-export interface UpdateTask extends Partial<Omit<Task, 'category' | 'id'>> {
+export interface CreateTask extends Partial<Omit<Task, 'category' | 'id'>> {
 	categoryId?: number;
 	userId?: number;
 }
+
+export interface UpdateTask extends CreateTask {}

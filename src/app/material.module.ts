@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
 	declarations: [],
+	imports: [MatNativeDateModule],
 	exports: [
 		MatDividerModule,
 		MatIconModule,
@@ -36,7 +40,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 		MatMenuModule,
 		MatPaginatorModule,
 		MatDialogModule,
-		DragDropModule
+		DragDropModule,
+		MatDatepickerModule,
+		MatAutocompleteModule
 	]
 })
 export class MaterialModule {}

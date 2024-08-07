@@ -1,0 +1,28 @@
+<mat-form-field
+	class="generic-select-autocomplete"
+	appearance="outline"
+	[class.mat-form-field-invalid]="!selectedValue && control.touched"
+>
+	<mat-label>Category</mat-label>
+	<input
+		type="text"
+		placeholder="Pick one"
+		aria-label="Category"
+		matInput
+		[matAutocomplete]="auto"
+		[formControl]="control"
+		(keydown)="keyDown($event)"
+	/>
+
+	<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+		<mat-option
+			*ngFor="let category of filteredOptions$ | async"
+			[value]="category.name"
+			(onSelectionChange)="selectOption($event, category)"
+		>
+			{{ category.name }}
+		</mat-option>
+	</mat-autocomplete>
+
+	<mat-hint *ngIf="!selectedValue && control.touched" class="mat-hint-mat-error"> A selection is required </mat-hint>
+</mat-form-field>

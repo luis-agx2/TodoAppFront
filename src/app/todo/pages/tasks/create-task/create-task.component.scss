@@ -1,0 +1,53 @@
+#container-create {
+	width: 60%;
+	margin: auto;
+
+	#header-container-create {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		margin-bottom: 12px;
+
+		.mat-h2 {
+			margin-bottom: 0;
+		}
+
+		#go-back-arrow {
+			cursor: pointer;
+			position: absolute;
+			left: 10px;
+		}
+	}
+
+	#container-form-create {
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+
+			.field-create {
+				width: 100%;
+			}
+
+			button[type='submit'] {
+				width: 100%;
+				color: white;
+				font-size: 15px;
+				font-weight: 500;
+			}
+		}
+	}
+}
+
+:host ::ng-deep.mat-progress-spinner circle {
+	stroke: white !important;
+	stroke-width: 5% !important;
+}
+
+:host ::ng-deep button[type='submit'] .mat-button-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+}

@@ -1,1 +1,55 @@
-<p>create-task works!</p>
+<div id="container-create">
+	<div id="header-container-create">
+		<mat-icon id="go-back-arrow" (click)="goBack()">arrow_back</mat-icon>
+		<h2 class="mat-h2">Register</h2>
+	</div>
+
+	<div id="container-form-create">
+		<form [formGroup]="formCreate" (ngSubmit)="sendSubmit()">
+			<!-- Name field -->
+			<mat-form-field class="field-create" appearance="outline">
+				<mat-label>Name</mat-label>
+				<input type="text" matInput formControlName="name" />
+				<mat-error [appReactiveControlError]="formCreate.get('name')" [fieldName]="'name'"> Invalid field </mat-error>
+			</mat-form-field>
+			<!-- Name field -->
+
+			<!-- Description field -->
+			<mat-form-field class="field-create" appearance="outline">
+				<mat-label>Description</mat-label>
+				<input type="text" matInput formControlName="description" />
+				<mat-error [appReactiveControlError]="formCreate.get('description')" [fieldName]="'description'">
+					Invalid field
+				</mat-error>
+			</mat-form-field>
+			<!-- Description field -->
+
+			<!-- Password field -->
+			<mat-form-field class="field-create" appearance="outline">
+				<mat-label>Start Date</mat-label>
+				<input matInput [matDatepicker]="pickerStartDate" formControlName="startDate" />
+				<mat-hint>MM-DD-YYYY</mat-hint>
+				<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+				<mat-datepicker #pickerStartDate></mat-datepicker>
+				<mat-error [appReactiveControlError]="formCreate.get('startDate')" [fieldName]="'startDate'">
+					Invalid field
+				</mat-error>
+			</mat-form-field>
+			<!-- Password field -->
+
+			<!-- Category field -->
+			<div>
+				<app-generic-select-autocomplete formControlName="category"></app-generic-select-autocomplete>
+			</div>
+			<!-- Category field -->
+
+			<!-- Button submit -->
+			<button type="submit" mat-raised-button color="primary" [disabled]="formCreate.invalid">
+				Create
+				<mat-spinner [diameter]="20" *ngIf="showSpinner$ | async"></mat-spinner>
+			</button>
+			<!-- Button submit -->
+		</form>
+	</div>
+	<!-- Form -->
+</div>

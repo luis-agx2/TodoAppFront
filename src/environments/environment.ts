@@ -21,6 +21,10 @@ export const environment = {
 	comments: {
 		baseUrl: 'http://localhost:8080/TodoAppRest/api/comments',
 		me: 'me'
+	},
+	categories: {
+		baseUrl: 'http://localhost:8080/TodoAppRest/api/categories',
+		me: 'me'
 	}
 };
 
