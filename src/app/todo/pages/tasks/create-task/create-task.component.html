@@ -39,7 +39,10 @@
 
 			<!-- Category field -->
 			<div>
-				<app-generic-select-autocomplete formControlName="category"></app-generic-select-autocomplete>
+				<app-generic-select-autocomplete
+					formControlName="category"
+					[options]="categories"
+				></app-generic-select-autocomplete>
 			</div>
 			<!-- Category field -->
 

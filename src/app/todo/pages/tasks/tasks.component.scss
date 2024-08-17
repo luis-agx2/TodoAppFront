@@ -64,6 +64,10 @@
 	}
 
 	#tasks-container {
+		.mat-h2 {
+			text-transform: uppercase;
+		}
+
 		#content #view-section {
 			justify-content: center;
 		}

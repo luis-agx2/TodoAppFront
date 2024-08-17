@@ -1,3 +1,11 @@
+@import './../../../../../assets/scss/variables.scss';
+
+@mixin media($breakpoint) {
+	@media only screen and (max-width: $breakpoint) {
+		@content;
+	}
+}
+
 #container-create {
 	width: 60%;
 	margin: auto;
@@ -50,4 +58,32 @@
 	align-items: center;
 	gap: 10px;
 	justify-content: center;
+}
+
+@include media($mobile-size) {
+	#container-create {
+		width: 100%;
+
+		#header-container-create .mat-h2 {
+			text-transform: uppercase;
+		}
+
+		#container-form-create {
+			form {
+				button[type='submit'] {
+					text-transform: uppercase;
+				}
+			}
+		}
+	}
+
+	:host ::ng-deep {
+		.mat-form-field-label mat-label {
+			font-family: $font-family-mobile;
+		}
+
+		.mat-form-field-infix .mat-input-element {
+			font-family: $font-family-mobile;
+		}
+	}
 }

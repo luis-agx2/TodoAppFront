@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { UtilsService } from '../../../generics/services/utils-service/utils.service';
-import { UpdateTask } from '../../interfaces/task.interface';
+import { CreateTask, UpdateTask } from '../../interfaces/task.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -36,6 +36,17 @@ export class TasksService {
 		const url = `${environment.tasks.baseUrl}/${environment.tasks.me}/${environment.tasks.dashboard}`;
 
 		return this.http.get(url).pipe(
+			catchError((error) => {
+				this.utilSvc.openBasicSnackBar(this.errorMessage, this.snackBarConfig);
+				throw error;
+			})
+		);
+	}
+
+	createMe(data: CreateTask): Observable<any> {
+		const url = `${environment.tasks.baseUrl}/${environment.tasks.me}`;
+
+		return this.http.post(url, data).pipe(
 			catchError((error) => {
 				this.utilSvc.openBasicSnackBar(this.errorMessage, this.snackBarConfig);
 				throw error;

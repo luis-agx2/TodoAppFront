@@ -1,7 +1,7 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatOptionSelectionChange } from '@angular/material/core';
-import { map, of, startWith } from 'rxjs';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
 	selector: 'app-generic-select-autocomplete',
@@ -16,26 +16,12 @@ import { map, of, startWith } from 'rxjs';
 	]
 })
 export class GenericSelectAutocompleteComponent implements ControlValueAccessor {
-	options = [
-		{
-			id: 1,
-			name: 'Deporte',
-			description: 'Practicar algún deporte por un determinado tiempo',
-			color: '#BA4A00'
-		},
-		{
-			id: 2,
-			name: 'Practica',
-			description: 'Practicar estructuras de datos',
-			color: '#58d68d'
-		},
-		{
-			id: 3,
-			name: 'Ejercicio',
-			description: 'Realizar actividad fisica por al menos 1 hora',
-			color: '#7fb3d5'
-		}
-	];
+	@Input() set options(items: any[]) {
+		this.filteredOptions$ = this.control?.valueChanges.pipe(
+			startWith(''),
+			map((value) => items?.filter((option) => option?.name?.toLocaleLowerCase()?.includes(value?.toLocaleLowerCase())))
+		);
+	}
 
 	isDisabled: boolean;
 	onChange = (_: any) => {};
@@ -43,50 +29,14 @@ export class GenericSelectAutocompleteComponent implements ControlValueAccessor 
 
 	selectedValue: any;
 	control: FormControl;
-	filteredOptions$ = of([
-		{
-			id: 1,
-			name: 'Deporte',
-			description: 'Practicar algún deporte por un determinado tiempo',
-			color: '#BA4A00'
-		},
-		{
-			id: 2,
-			name: 'Practica',
-			description: 'Practicar estructuras de datos',
-			color: '#58d68d'
-		},
-		{
-			id: 3,
-			name: 'Ejercicio',
-			description: 'Realizar actividad fisica por al menos 1 hora',
-			color: '#7fb3d5'
-		},
-		{
-			id: 4,
-			name: 'Meditación',
-			description: 'Practicar la meditación',
-			color: '#27AE60'
-		},
-		{
-			id: 6,
-			name: 'Lectura',
-			description: 'Practica tu lectura',
-			color: '#7FB3D5'
-		}
-	]);
+	filteredOptions$: Observable<any[]>;
 
 	constructor() {
+		this.options = [];
 		this.isDisabled = false;
 		this.selectedValue = null;
 		this.control = new FormControl('');
-
-		this.filteredOptions$ = this.control.valueChanges.pipe(
-			startWith(''),
-			map((value) =>
-				this.options.filter((option) => option?.name?.toLocaleLowerCase()?.includes(value?.toLocaleLowerCase()))
-			)
-		);
+		this.filteredOptions$ = of([]);
 	}
 
 	writeValue(obj: any): void {}

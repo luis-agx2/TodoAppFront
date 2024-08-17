@@ -1,10 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UtilsService } from '../../../../generics/services/utils-service/utils.service';
 import { Category } from '../../../interfaces/task.interface';
 import { CategoriesService } from '../../../services/categories-service/categories.service';
+import { TasksService } from '../../../services/tasks-service/tasks.service';
 
 @Component({
 	selector: 'app-create-task',
@@ -20,7 +22,9 @@ export class CreateTaskComponent implements OnInit {
 		private location: Location,
 		private fb: FormBuilder,
 		private utilsSvc: UtilsService,
-		private categoriesSvc: CategoriesService
+		private categoriesSvc: CategoriesService,
+		private tasksSvc: TasksService,
+		private router: Router
 	) {
 		this.formCreate = this.fb.group({
 			name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
@@ -41,7 +45,6 @@ export class CreateTaskComponent implements OnInit {
 		this.categoriesSvc.getAllCategories().subscribe({
 			next: (resp) => {
 				this.categories = resp;
-				console.log(resp);
 			}
 		});
 	}
@@ -52,7 +55,28 @@ export class CreateTaskComponent implements OnInit {
 			return;
 		}
 
-		const { name, description, startDate, categoryId } = this.formCreate.getRawValue();
+		this.createTask();
+	}
+
+	createTask(): void {
+		const {
+			name,
+			description,
+			startDate,
+			category: { id: categoryId }
+		} = this.formCreate.getRawValue();
+
+		const task = { name, description, startDate, categoryId, userId: 1 };
+
+		this.tasksSvc.createMe(task).subscribe({
+			next: () => {
+				this.utilsSvc.openBasicSnackBar('The task has been registered successfully', {
+					panelClass: 'mat-snack-bar-success'
+				});
+
+				this.router.navigate(['/my-tasks']);
+			}
+		});
 	}
 
 	goBack(): void {
