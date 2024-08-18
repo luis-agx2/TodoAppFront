@@ -32,6 +32,16 @@ export class TasksService {
 		);
 	}
 
+	getMe(taskId: number): Observable<any> {
+		const url = `${environment.tasks.baseUrl}/${environment.tasks.me}/${taskId}`;
+		return this.http.get(url).pipe(
+			catchError((error) => {
+				this.utilSvc.openBasicSnackBar(this.errorMessage, this.snackBarConfig);
+				throw error;
+			})
+		);
+	}
+
 	getAllMeDashboard(): Observable<any> {
 		const url = `${environment.tasks.baseUrl}/${environment.tasks.me}/${environment.tasks.dashboard}`;
 

@@ -1,10 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
 import { UtilsService } from '../../../../generics/services/utils-service/utils.service';
-import { Category } from '../../../interfaces/task.interface';
+import { Category, Task } from '../../../interfaces/task.interface';
 import { CategoriesService } from '../../../services/categories-service/categories.service';
 import { TasksService } from '../../../services/tasks-service/tasks.service';
 
@@ -16,6 +16,8 @@ import { TasksService } from '../../../services/tasks-service/tasks.service';
 export class CreateTaskComponent implements OnInit {
 	showSpinner$: Observable<boolean>;
 	categories: Category[];
+	task: Task | null;
+	isEditMode: boolean;
 
 	formCreate: FormGroup;
 	constructor(
@@ -24,29 +26,54 @@ export class CreateTaskComponent implements OnInit {
 		private utilsSvc: UtilsService,
 		private categoriesSvc: CategoriesService,
 		private tasksSvc: TasksService,
-		private router: Router
+		private router: Router,
+		private activatedRoute: ActivatedRoute
 	) {
 		this.formCreate = this.fb.group({
 			name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
 			description: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(60)]],
 			startDate: [null, [Validators.required]],
-			category: [null, [Validators.required]]
+			endDate: [null],
+			category: [null, [Validators.required]],
+			status: [null, [Validators.required]]
 		});
 
 		this.showSpinner$ = this.utilsSvc.spinnerLoading();
 		this.categories = [];
+		this.task = null;
+		this.isEditMode = false;
 	}
 
 	ngOnInit(): void {
-		this.getAllCategories();
+		this.categoriesSvc
+			.getAllCategories()
+			.pipe(
+				switchMap((categories) => {
+					this.categories = categories;
+					return this.activatedRoute.params;
+				}),
+				switchMap((params) => {
+					return !!params[`id`] ? this.tasksSvc.getMe(params[`id`]) : of(null);
+				})
+			)
+			.subscribe({
+				next: (task) => {
+					this.task = task;
+
+					if (!!this.task) {
+						this.isEditMode = true;
+						this.patchEditForm();
+					} else {
+						this.isEditMode = false;
+					}
+				}
+			});
 	}
 
-	getAllCategories(): void {
-		this.categoriesSvc.getAllCategories().subscribe({
-			next: (resp) => {
-				this.categories = resp;
-			}
-		});
+	patchEditForm(): void {
+		const { name, description, startDate, endDate, category, status } = this.task!;
+
+		this.formCreate.patchValue({ name, description, startDate, endDate, category, status });
 	}
 
 	sendSubmit(): void {
@@ -55,7 +82,11 @@ export class CreateTaskComponent implements OnInit {
 			return;
 		}
 
-		this.createTask();
+		if (!this.isEditMode) {
+			this.createTask();
+		} else {
+			this.updateTask();
+		}
 	}
 
 	createTask(): void {
@@ -71,6 +102,29 @@ export class CreateTaskComponent implements OnInit {
 		this.tasksSvc.createMe(task).subscribe({
 			next: () => {
 				this.utilsSvc.openBasicSnackBar('The task has been registered successfully', {
+					panelClass: 'mat-snack-bar-success'
+				});
+
+				this.router.navigate(['/my-tasks']);
+			}
+		});
+	}
+
+	updateTask(): void {
+		const {
+			name,
+			description,
+			startDate,
+			category: { id: categoryId },
+			endDate,
+			status
+		} = this.formCreate.getRawValue();
+
+		const task = { name, description, startDate, categoryId, userId: 1, endDate, status };
+
+		this.tasksSvc.updateMe(this.task?.id!, task).subscribe({
+			next: () => {
+				this.utilsSvc.openBasicSnackBar('The task has been updated successfully', {
 					panelClass: 'mat-snack-bar-success'
 				});
 

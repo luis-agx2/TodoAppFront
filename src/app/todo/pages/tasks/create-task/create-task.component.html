@@ -4,55 +4,74 @@
 		<h2 class="mat-h2">Register</h2>
 	</div>
 
-	<div id="container-form-create">
-		<form [formGroup]="formCreate" (ngSubmit)="sendSubmit()">
-			<!-- Name field -->
-			<mat-form-field class="field-create" appearance="outline">
-				<mat-label>Name</mat-label>
-				<input type="text" matInput formControlName="name" />
-				<mat-error [appReactiveControlError]="formCreate.get('name')" [fieldName]="'name'"> Invalid field </mat-error>
-			</mat-form-field>
-			<!-- Name field -->
+	<ng-container *ngIf="showSpinner$ | async; else contentLoaded">
+		<div id="spinner-container">
+			<mat-spinner class="spinner-tasks" color="primary"></mat-spinner>
+		</div>
+	</ng-container>
 
-			<!-- Description field -->
-			<mat-form-field class="field-create" appearance="outline">
-				<mat-label>Description</mat-label>
-				<input type="text" matInput formControlName="description" />
-				<mat-error [appReactiveControlError]="formCreate.get('description')" [fieldName]="'description'">
-					Invalid field
-				</mat-error>
-			</mat-form-field>
-			<!-- Description field -->
+	<ng-template #contentLoaded>
+		<div id="container-form-create">
+			<form [formGroup]="formCreate" (ngSubmit)="sendSubmit()">
+				<!-- Name field -->
+				<mat-form-field class="field-create" appearance="outline">
+					<mat-label>Name</mat-label>
+					<input type="text" matInput formControlName="name" />
+					<mat-error [appReactiveControlError]="formCreate.get('name')" [fieldName]="'name'"> Invalid field </mat-error>
+				</mat-form-field>
+				<!-- Name field -->
 
-			<!-- Password field -->
-			<mat-form-field class="field-create" appearance="outline">
-				<mat-label>Start Date</mat-label>
-				<input matInput [matDatepicker]="pickerStartDate" formControlName="startDate" />
-				<mat-hint>MM-DD-YYYY</mat-hint>
-				<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-				<mat-datepicker #pickerStartDate></mat-datepicker>
-				<mat-error [appReactiveControlError]="formCreate.get('startDate')" [fieldName]="'startDate'">
-					Invalid field
-				</mat-error>
-			</mat-form-field>
-			<!-- Password field -->
+				<!-- Description field -->
+				<mat-form-field class="field-create" appearance="outline">
+					<mat-label>Description</mat-label>
+					<input type="text" matInput formControlName="description" />
+					<mat-error [appReactiveControlError]="formCreate.get('description')" [fieldName]="'description'">
+						Invalid field
+					</mat-error>
+				</mat-form-field>
+				<!-- Description field -->
 
-			<!-- Category field -->
-			<div>
+				<!-- Start date field -->
+				<mat-form-field class="field-create" appearance="outline">
+					<mat-label>Start Date</mat-label>
+					<input matInput [matDatepicker]="pickerStartDate" formControlName="startDate" />
+					<mat-hint>MM-DD-YYYY</mat-hint>
+					<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+					<mat-datepicker #pickerStartDate></mat-datepicker>
+					<mat-error [appReactiveControlError]="formCreate.get('startDate')" [fieldName]="'startDate'">
+						Invalid field
+					</mat-error>
+				</mat-form-field>
+				<!-- Start date field -->
+
+				<!-- End date field - Show only for edit mode -->
+				<mat-form-field class="field-create" appearance="outline" *ngIf="isEditMode">
+					<mat-label>End Date</mat-label>
+					<input matInput [matDatepicker]="pickerEndDate" formControlName="endDate" />
+					<mat-hint>MM-DD-YYYY</mat-hint>
+					<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+					<mat-datepicker #pickerEndDate></mat-datepicker>
+					<mat-error [appReactiveControlError]="formCreate.get('endDate')" [fieldName]="'endDate'">
+						Invalid field
+					</mat-error>
+				</mat-form-field>
+				<!-- End date field - Show only for edit mode -->
+
+				<!-- Category field -->
 				<app-generic-select-autocomplete
 					formControlName="category"
 					[options]="categories"
 				></app-generic-select-autocomplete>
-			</div>
-			<!-- Category field -->
+				<!-- Category field -->
 
-			<!-- Button submit -->
-			<button type="submit" mat-raised-button color="primary" [disabled]="formCreate.invalid">
-				Create
-				<mat-spinner [diameter]="20" *ngIf="showSpinner$ | async"></mat-spinner>
-			</button>
-			<!-- Button submit -->
-		</form>
-	</div>
+				<!-- Button submit -->
+				<button type="submit" mat-raised-button color="primary" [disabled]="formCreate.invalid">
+					{{ !isEditMode ? 'Create' : 'Update' }}
+					<mat-spinner [diameter]="20" *ngIf="showSpinner$ | async"></mat-spinner>
+				</button>
+				<!-- Button submit -->
+			</form>
+		</div>
+	</ng-template>
 	<!-- Form -->
 </div>

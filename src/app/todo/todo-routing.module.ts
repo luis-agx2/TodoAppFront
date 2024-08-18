@@ -24,6 +24,10 @@ const routes: Routes = [
 				component: CreateTaskComponent
 			},
 			{
+				path: 'update-task/:id',
+				component: CreateTaskComponent
+			},
+			{
 				path: 'preferences',
 				component: PreferencesComponent
 			},
