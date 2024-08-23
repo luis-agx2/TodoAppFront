@@ -1,0 +1,25 @@
+<div class="task-card" cdkDrag [cdkDragData]="task" (click)="clickItem()">
+	<div class="card-header">
+		<div class="title">
+			<span class="status-dot" [style.background-color]="task?.category?.color"></span>
+			<h5>{{ task?.name }}</h5>
+		</div>
+
+		<ng-container>
+			<button class="btn-options" [matMenuTriggerFor]="menu" aria-label="Task menu" (click)="$event.stopPropagation()">
+				<mat-icon>more_vert</mat-icon>
+			</button>
+
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="optionMenuSelected('edit_item')">
+					<mat-icon>edit</mat-icon>
+					<span>Edit</span>
+				</button>
+			</mat-menu>
+		</ng-container>
+	</div>
+
+	<p class="text">{{ task?.startDate }}</p>
+
+	<p class="text">{{ task?.description }}</p>
+</div>

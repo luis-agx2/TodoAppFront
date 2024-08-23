@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import { forkJoin, Observable, of, switchMap } from 'rxjs';
 import { UtilsService } from '../../../../generics/services/utils-service/utils.service';
 import { Category, Task } from '../../../interfaces/task.interface';
 import { CategoriesService } from '../../../services/categories-service/categories.service';
@@ -45,26 +45,23 @@ export class CreateTaskComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.categoriesSvc
-			.getAllCategories()
+		this.activatedRoute.params
 			.pipe(
-				switchMap((categories) => {
-					this.categories = categories;
-					return this.activatedRoute.params;
-				}),
-				switchMap((params) => {
-					return !!params[`id`] ? this.tasksSvc.getMe(params[`id`]) : of(null);
+				switchMap(({ id }) => {
+					return forkJoin({
+						task_edit: !!id ? this.tasksSvc.getMe(id) : of(null),
+						categories: this.categoriesSvc.getAllCategories()
+					});
 				})
 			)
 			.subscribe({
-				next: (task) => {
-					this.task = task;
+				next: (data) => {
+					this.isEditMode = !!data.task_edit;
+					this.categories = data.categories;
 
-					if (!!this.task) {
-						this.isEditMode = true;
+					if (this.isEditMode) {
+						this.task = data.task_edit;
 						this.patchEditForm();
-					} else {
-						this.isEditMode = false;
 					}
 				}
 			});

@@ -4,22 +4,14 @@
 
 		<div id="new" class="cards" cdkDropList [cdkDropListData]="dataGrid.news" (cdkDropListDropped)="drop($event)">
 			<ng-container *ngIf="dataGrid.news.length > 0; else emptyContent">
-				<div
-					class="task-card"
+				<app-dashboard-item
 					*ngFor="let task of dataGrid?.news"
+					[task]="task"
 					cdkDrag
 					[cdkDragData]="task"
-					(click)="clickItem(task)"
+					(dashBoardItemEvent)="eventDashboardItemHandler($event)"
 				>
-					<div class="card-header">
-						<h5>{{ task?.name }}</h5>
-						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
-					</div>
-
-					<p class="text">{{ task?.startDate }}</p>
-
-					<p class="text">{{ task?.description }}</p>
-				</div>
+				</app-dashboard-item>
 			</ng-container>
 		</div>
 	</article>
@@ -35,22 +27,14 @@
 			(cdkDropListDropped)="drop($event)"
 		>
 			<ng-container *ngIf="dataGrid.inProgress.length > 0; else emptyContent">
-				<div
-					class="task-card"
+				<app-dashboard-item
 					*ngFor="let task of dataGrid?.inProgress"
+					[task]="task"
 					cdkDrag
 					[cdkDragData]="task"
-					(click)="clickItem(task)"
+					(dashBoardItemEvent)="eventDashboardItemHandler($event)"
 				>
-					<div class="card-header">
-						<h5>{{ task?.name }}</h5>
-						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
-					</div>
-
-					<p class="text">{{ task?.startDate }}</p>
-
-					<p class="text">{{ task?.description }}</p>
-				</div>
+				</app-dashboard-item>
 			</ng-container>
 		</div>
 	</article>
@@ -60,22 +44,14 @@
 
 		<div id="paused" class="cards" cdkDropList [cdkDropListData]="dataGrid.paused" (cdkDropListDropped)="drop($event)">
 			<ng-container *ngIf="dataGrid.paused.length > 0; else emptyContent">
-				<div
-					class="task-card"
+				<app-dashboard-item
 					*ngFor="let task of dataGrid?.paused"
+					[task]="task"
 					cdkDrag
 					[cdkDragData]="task"
-					(click)="clickItem(task)"
+					(dashBoardItemEvent)="eventDashboardItemHandler($event)"
 				>
-					<div class="card-header">
-						<h5>{{ task?.name }}</h5>
-						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
-					</div>
-
-					<p class="text">{{ task?.startDate }}</p>
-
-					<p class="text">{{ task?.description }}</p>
-				</div>
+				</app-dashboard-item>
 			</ng-container>
 		</div>
 	</article>
@@ -91,22 +67,14 @@
 			(cdkDropListDropped)="drop($event)"
 		>
 			<ng-container *ngIf="dataGrid.completed.length > 0; else emptyContent">
-				<div
-					class="task-card"
+				<app-dashboard-item
 					*ngFor="let task of dataGrid?.completed"
+					[task]="task"
 					cdkDrag
 					[cdkDragData]="task"
-					(click)="clickItem(task)"
+					(dashBoardItemEvent)="eventDashboardItemHandler($event)"
 				>
-					<div class="card-header">
-						<h5>{{ task?.name }}</h5>
-						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
-					</div>
-
-					<p class="text">{{ task?.startDate }}</p>
-
-					<p class="text">{{ task?.description }}</p>
-				</div>
+				</app-dashboard-item>
 			</ng-container>
 		</div>
 	</article>
@@ -122,22 +90,14 @@
 			(cdkDropListDropped)="drop($event)"
 		>
 			<ng-container *ngIf="dataGrid.cancelled.length > 0; else emptyContent">
-				<div
-					class="task-card"
+				<app-dashboard-item
 					*ngFor="let task of dataGrid?.cancelled"
+					[task]="task"
 					cdkDrag
 					[cdkDragData]="task"
-					(click)="clickItem(task)"
+					(dashBoardItemEvent)="eventDashboardItemHandler($event)"
 				>
-					<div class="card-header">
-						<h5>{{ task?.name }}</h5>
-						<span class="status-dot" [style.background-color]="task?.category?.color"></span>
-					</div>
-
-					<p class="text">{{ task?.startDate }}</p>
-
-					<p class="text">{{ task?.description }}</p>
-				</div>
+				</app-dashboard-item>
 			</ng-container>
 		</div>
 	</article>

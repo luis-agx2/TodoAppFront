@@ -2,7 +2,8 @@ import { Menu, MenuItem } from '../interfaces/menu-item.interface';
 
 const MENU_USER: MenuItem[] = [
 	{ id: 'home', icon: 'home', path: '/', name: 'Home' },
-	{ id: 'tasks-user', icon: 'tasks', path: '/my-tasks', name: 'My Tasks' }
+	{ id: 'tasks-user', icon: 'tasks', path: '/my-tasks', name: 'My Tasks' },
+	{ id: 'categories', icon: 'category', path: '/my-categories', name: 'My Categories' }
 ];
 
 const MENU_ADMIN: MenuItem[] = [

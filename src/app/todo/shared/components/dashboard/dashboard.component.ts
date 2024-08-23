@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MAT_MENU_DEFAULT_OPTIONS } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { CustomGenericEvent } from '../../../../generics/interfaces/custom-events.interface';
 import { TASK_STATUS } from '../../../data/task-status';
@@ -9,7 +10,15 @@ import { Task } from '../../../interfaces/task.interface';
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
-	styleUrls: ['./dashboard.component.scss']
+	styleUrls: ['./dashboard.component.scss'],
+	providers: [
+		{
+			provide: MAT_MENU_DEFAULT_OPTIONS,
+			useValue: {
+				overlayPanelClass: 'dashboard-overlay-panel-menu'
+			}
+		}
+	]
 })
 export class DashboardComponent {
 	@Input() dataGrid: DashboardTask;
@@ -47,14 +56,6 @@ export class DashboardComponent {
 		}
 	}
 
-	clickItem(task: Task): void {
-		const data = {
-			item: task
-		};
-
-		this.emitEvent('clicked_item', data);
-	}
-
 	getStatusByColumnId(id: string): string {
 		console.log(id);
 
@@ -73,6 +74,10 @@ export class DashboardComponent {
 		}
 
 		return fnGetName();
+	}
+
+	eventDashboardItemHandler(event: CustomGenericEvent): void {
+		this.emitEvent(event.action, event.value);
 	}
 
 	emitEvent(action: string, value: any): void {

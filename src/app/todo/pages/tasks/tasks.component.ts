@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CustomGenericEvent } from '../../../generics/interfaces/custom-events.interface';
 import { GenericTableColumn, GenericTablePaginator } from '../../../generics/interfaces/generic-table.interface';
@@ -33,7 +34,8 @@ export class TasksComponent {
 	constructor(
 		private utilsSvc: UtilsService,
 		private tasksSvc: TasksService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private router: Router
 	) {
 		this.isMobile = utilsSvc.isMobile() ?? false;
 		this.spinnerStatus = this.utilsSvc.spinnerLoading();
@@ -84,6 +86,9 @@ export class TasksComponent {
 				console.log('ave');
 
 				this.openDialogTask(event.value.item);
+			},
+			edit_item: () => {
+				this.router.navigate(['/update-task', event.value.item.id]);
 			},
 			drag_and_drop: () => {
 				this.updateTask(event.value.item.id, { status: event.value.new_status });

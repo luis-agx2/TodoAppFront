@@ -41,7 +41,7 @@ export class GenericSelectAutocompleteComponent implements ControlValueAccessor 
 
 	writeValue(obj: any): void {
 		this.selectedValue = obj;
-		this.control.setValue(obj[`name`]);
+		this.control.setValue(obj?.[`name`] ?? null);
 		this.onChange(obj);
 	}
 
