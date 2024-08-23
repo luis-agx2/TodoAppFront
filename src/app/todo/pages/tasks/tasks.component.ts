@@ -58,7 +58,6 @@ export class TasksComponent {
 
 		const actions = {
 			clicked_column: () => {
-				// console.log('click column table', event.value);
 				this.openDialogTask(event.value.column);
 			},
 			option_change_status: () => {
@@ -68,6 +67,9 @@ export class TasksComponent {
 				this.paginatorTable = event.value;
 
 				this.getAllTasks(this.paginatorTable.pageIndex, this.paginatorTable.pageSize);
+			},
+			button_add: () => {
+				this.router.navigate(['/create-task']);
 			}
 		} as any;
 

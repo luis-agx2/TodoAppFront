@@ -95,3 +95,15 @@
 		}
 	}
 }
+
+:host::ng-deep.mat-fab {
+	position: fixed;
+	bottom: 60px;
+	right: 20px;
+	width: 40px;
+	height: 40px;
+
+	.mat-button-wrapper {
+		padding: 0 !important;
+	}
+}

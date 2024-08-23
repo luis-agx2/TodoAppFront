@@ -21,6 +21,7 @@ export class GenericTableComponent {
 
 	@Input() paginator: GenericTablePaginator;
 	@Input() pageSizeOptions: number[];
+	@Input() showButtonAdd: boolean;
 
 	columns: any[];
 	dataSource: any[];
@@ -35,6 +36,7 @@ export class GenericTableComponent {
 		this.displayedColumns = [];
 		this.paginator = { length: 0, pageIndex: 0, previousPageIndex: 0, pageSize: 10 };
 		this.pageSizeOptions = [1, 5, 10];
+		this.showButtonAdd = true;
 	}
 
 	clickColumn(itemClicked: any): void {
@@ -52,6 +54,10 @@ export class GenericTableComponent {
 
 	paginatorChange(event: any): void {
 		this.emitTableEvent('change_paginator', { ...event });
+	}
+
+	buttonAdd(): void {
+		this.emitTableEvent('button_add', true);
 	}
 
 	emitTableEvent(action: string, value: any): void {
